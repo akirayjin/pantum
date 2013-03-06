@@ -2,6 +2,10 @@ package com.pantum;
 
 import java.util.HashMap;
 
+import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapView;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
@@ -14,20 +18,25 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-public class MainActivity extends Activity {
-	WebView wv;
-	Spinner stationSpinner;
-	HashMap<String, String> map;
-	LinearLayout opening;
-	TextView stationName;
-	Context activity;
-	
+public class MainActivity extends MapActivity {
+	public WebView wv;
+	public Spinner stationSpinner;
+	public HashMap<String, String> map;
+	public LinearLayout opening;
+	public TextView stationName;
+	public Context activity;
+	public MapView mapView;
+	public ScrollView scrollView;
+	public Button backToTop;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,15 +50,33 @@ public class MainActivity extends Activity {
 		addListenerOnSpinnerItemSelection();
 		ImageView starIcon = (ImageView)findViewById(R.id.star_icon);
 		starIcon.setOnClickListener(new OnClickListener() {
-			
 			public void onClick(View v) {
-//				// TODO Auto-generated method stub
-//				Intent i = new Intent(activity, MapViewActivity.class);
-//				startActivity(i); 
+
 			}
 		});
+		scrollView = (ScrollView)findViewById(R.id.scroll_view);
+		backToTop = (Button)findViewById(R.id.back_to_top);
+		backToTop.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				scrollView.scrollTo(0, 0);
+			}
+		});
+		mapView = (MapView)findViewById(R.id.map);
+		mapView.setBuiltInZoomControls(true);
+		mapView.postInvalidate();
+
+		//setMapZoomPoint(new GeoPoint((int)(37.441*1E6), (int)(-122.1419*1E6)), 15);
 	}
-	
+
+	private void setMapZoomPoint(GeoPoint geoPoint, int zoomLevel) {
+		mapView.getController().setCenter(geoPoint);
+		mapView.getController().setZoom(zoomLevel);
+		mapView.postInvalidate();
+	}
+
+
 	private void setWebViewLayout(){
 		if(wv == null)
 			wv = (WebView)findViewById(R.id.webview);
@@ -69,12 +96,12 @@ public class MainActivity extends Activity {
 	public void addListenerOnSpinnerItemSelection() {
 		stationSpinner = (Spinner) findViewById(R.id.station_spinner);
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-		        R.array.station_arrays, android.R.layout.simple_spinner_item);
+				R.array.station_arrays, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		stationSpinner.setAdapter(adapter);
 		stationSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener());
 	}
-	
+
 	public void createMapForStationCode(){
 		map = new HashMap<String, String>();
 		map.put("Jakartakota", "JAK");
@@ -145,11 +172,11 @@ public class MainActivity extends Activity {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-	
+
 	public class CustomOnItemSelectedListener implements OnItemSelectedListener {
-		
+
 		public CustomOnItemSelectedListener(){}
-		
+
 		public void onItemSelected(AdapterView<?> parent, View view, int pos,long id) {
 			String currentStation = parent.getItemAtPosition(pos).toString();
 
@@ -160,7 +187,7 @@ public class MainActivity extends Activity {
 					wv.setVisibility(View.VISIBLE);
 					opening.setVisibility(View.GONE);
 					wv.loadUrl("http://infoka.krl.co.id/to/"+currentKey);
-					stationName.setText(currentStation);
+					stationName.setText("Stasiun "+currentStation);
 					isFound = true;
 				}else{
 					wv.setVisibility(View.GONE);
@@ -172,6 +199,11 @@ public class MainActivity extends Activity {
 
 		public void onNothingSelected(AdapterView<?> arg0) {}
 
+	}
+
+	@Override
+	protected boolean isRouteDisplayed() {
+		return false;
 	}
 
 }

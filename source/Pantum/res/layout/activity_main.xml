@@ -13,30 +13,21 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="40dip"
-        android:gravity="right"
         android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/back_to_top"
-            android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:text="Back To Top" />
 
         <TextView
             android:id="@+id/text"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="fill_parent"
-            android:layout_marginLeft="40dip"
-            android:gravity="center_vertical"
-            android:text="@string/no_station_selected"
-            android:visibility="visible" />
+            android:layout_weight="9"
+            android:gravity="center_vertical|right"
+            android:paddingRight="20dip"
+            android:text="@string/no_station_selected" />
 
-        <ImageView
-            android:id="@+id/star_icon"
+        <CheckBox
+            android:id="@+id/favourite_button" 
             android:layout_width="wrap_content"
-            android:layout_height="fill_parent"
-            android:layout_marginLeft="30dip"
-            android:src="@drawable/ic_launcher" />
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <View
@@ -55,15 +46,15 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginLeft="20dip" >
-
-            <com.pantum.CustomWebView
-                android:id="@+id/webview"
-                android:layout_width="fill_parent"
-                android:layout_height="150dip"
-                android:visibility="gone" />
-
+            android:layout_marginRight="20dip"
+            android:orientation="vertical" >
+            
+            <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/web_title"
+                    android:layout_marginBottom="10dip" />
+            
             <LinearLayout
                 android:id="@+id/opening"
                 android:layout_width="fill_parent"
@@ -71,18 +62,44 @@
                 android:gravity="center" >
 
                 <TextView
-                    android:id="@+id/opening_text"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:gravity="center"
                     android:text="@string/no_data" />
             </LinearLayout>
 
+            <com.pantum.CustomWebView
+                android:id="@+id/webview"
+                android:layout_width="fill_parent"
+                android:layout_height="150dip"
+                android:visibility="gone" />
+
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
-                android:layout_marginBottom="30dip"
+                android:layout_marginTop="5dip"
+                android:layout_marginBottom="5dip"
                 android:background="@android:color/darker_gray" />
+            
+            <TextView
+                android:id="@+id/location_text"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/map_title"
+                    android:layout_marginBottom="10dip" />
+            
+            <LinearLayout
+                android:id="@+id/opening_map"
+                android:layout_width="fill_parent"
+                android:layout_height="180dip"
+                android:gravity="center" >
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:text="@string/no_data" />
+            </LinearLayout>
 
             <com.pantum.CustomMapView
                 android:id="@+id/map"
@@ -90,27 +107,27 @@
                 android:layout_height="200dip"
                 android:apiKey="09AzsycAUdc_rVZn6fthMS4B9amm5ei5CVDV_Qw"
                 android:clickable="true"
-                android:paddingRight="200dip" />
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/bottom_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="50dip"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight=".1"
+                    android:text="@string/location_button" />
+
+                <Button
+                    android:layout_width="0dip"
+                    android:layout_height="fill_parent"
+                    android:layout_weight=".1"
+                    android:text="@string/credit_button" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
-    <LinearLayout
-        android:id="@+id/opening"
-        android:layout_width="fill_parent"
-        android:layout_height="50dip"
-        android:orientation="horizontal" >
-
-        <Button
-            android:layout_width="0dip"
-            android:layout_height="fill_parent"
-            android:layout_weight=".1"
-            android:text="kredit" />
-
-        <Button
-            android:layout_width="0dip"
-            android:layout_height="fill_parent"
-            android:layout_weight=".1"
-            android:text="kredit2" />
-    </LinearLayout>
 
 </LinearLayout>

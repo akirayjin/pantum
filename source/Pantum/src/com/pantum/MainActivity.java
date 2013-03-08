@@ -2,40 +2,33 @@ package com.pantum;
 
 import java.util.HashMap;
 
-import com.google.android.maps.GeoPoint;
-import com.google.android.maps.MapActivity;
-import com.google.android.maps.MapView;
-
-import android.os.Bundle;
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.view.Menu;
+import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.Window;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.AdapterView.OnItemSelectedListener;
+
+import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapView;
 
 public class MainActivity extends MapActivity {
 	public WebView wv;
 	public Spinner stationSpinner;
 	public HashMap<String, String> map;
-	public LinearLayout opening;
+	public LinearLayout opening, openingMap;
 	public TextView stationName;
 	public Context activity;
 	public MapView mapView;
-	public ScrollView scrollView;
-	public Button backToTop;
+	public TextView locationText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,40 +36,32 @@ public class MainActivity extends MapActivity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		opening = (LinearLayout)findViewById(R.id.opening);
+		openingMap = (LinearLayout)findViewById(R.id.opening_map);
 		stationName = (TextView)findViewById(R.id.text);
+		locationText = (TextView)findViewById(R.id.location_text);
 		createMapForStationCode();
 		activity = this.getApplicationContext();
 		setWebViewLayout();
 		addListenerOnSpinnerItemSelection();
-		ImageView starIcon = (ImageView)findViewById(R.id.star_icon);
-		starIcon.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-
-			}
-		});
-		scrollView = (ScrollView)findViewById(R.id.scroll_view);
-		backToTop = (Button)findViewById(R.id.back_to_top);
-		backToTop.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View arg0) {
-				scrollView.scrollTo(0, 0);
-			}
-		});
-		mapView = (MapView)findViewById(R.id.map);
-		mapView.setBuiltInZoomControls(true);
-		mapView.postInvalidate();
+		setMapViewLayout();
 
 		//setMapZoomPoint(new GeoPoint((int)(37.441*1E6), (int)(-122.1419*1E6)), 15);
 	}
 
-	private void setMapZoomPoint(GeoPoint geoPoint, int zoomLevel) {
-		mapView.getController().setCenter(geoPoint);
-		mapView.getController().setZoom(zoomLevel);
+//	private void setMapZoomPoint(GeoPoint geoPoint, int zoomLevel) {
+//		mapView.getController().setCenter(geoPoint);
+//		mapView.getController().setZoom(zoomLevel);
+//		mapView.postInvalidate();
+//	}
+	
+	private void setMapViewLayout(){
+		mapView = (MapView)findViewById(R.id.map);
+		mapView.setBuiltInZoomControls(true);
 		mapView.postInvalidate();
 	}
 
 
+	@SuppressLint("SetJavaScriptEnabled")
 	private void setWebViewLayout(){
 		if(wv == null)
 			wv = (WebView)findViewById(R.id.webview);
@@ -166,12 +151,12 @@ public class MainActivity extends MapActivity {
 		map.put("Palmerah", "PLM");
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		// Inflate the menu; this adds items to the action bar if it is present.
+//		getMenuInflater().inflate(R.menu.main, menu);
+//		return true;
+//	}
 
 	public class CustomOnItemSelectedListener implements OnItemSelectedListener {
 
@@ -184,21 +169,35 @@ public class MainActivity extends MapActivity {
 			for (int i = 0; i < map.size() && !isFound; i++) {
 				String currentKey = map.get(currentStation);
 				if(currentKey != null){
-					wv.setVisibility(View.VISIBLE);
-					opening.setVisibility(View.GONE);
+					setDataVisibility(true);
 					wv.loadUrl("http://infoka.krl.co.id/to/"+currentKey);
 					stationName.setText("Stasiun "+currentStation);
+					locationText.setText("Lokasi Stasiun "+currentStation);
 					isFound = true;
 				}else{
-					wv.setVisibility(View.GONE);
-					opening.setVisibility(View.VISIBLE);
+					setDataVisibility(false);
 					stationName.setText(R.string.no_station_selected);
+					locationText.setText("Lokasi Stasiun");
 				}
 			}
 		}
 
 		public void onNothingSelected(AdapterView<?> arg0) {}
 
+	}
+	
+	public void setDataVisibility(boolean state){
+		if(state){
+			wv.setVisibility(View.VISIBLE);
+			mapView.setVisibility(View.VISIBLE);
+			opening.setVisibility(View.GONE);
+			openingMap.setVisibility(View.GONE);
+		}else{
+			wv.setVisibility(View.GONE);
+			mapView.setVisibility(View.GONE);
+			opening.setVisibility(View.VISIBLE);
+			openingMap.setVisibility(View.VISIBLE);
+		}
 	}
 
 	@Override

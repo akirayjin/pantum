@@ -4,15 +4,17 @@ import java.util.HashMap;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
+import android.view.View.OnClickListener;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -29,21 +31,32 @@ public class MainActivity extends MapActivity {
 	public Context activity;
 	public MapView mapView;
 	public TextView locationText;
+	public Button locationButton, creditButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		opening = (LinearLayout)findViewById(R.id.opening);
 		openingMap = (LinearLayout)findViewById(R.id.opening_map);
 		stationName = (TextView)findViewById(R.id.text);
 		locationText = (TextView)findViewById(R.id.location_text);
+		locationButton = (Button)findViewById(R.id.location_button);
+		creditButton = (Button)findViewById(R.id.credit_button);
 		createMapForStationCode();
 		activity = this.getApplicationContext();
 		setWebViewLayout();
 		addListenerOnSpinnerItemSelection();
 		setMapViewLayout();
+		
+		creditButton.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(MainActivity.this, CreditActivity.class);
+				startActivity(intent);
+			}
+		});
 
 		//setMapZoomPoint(new GeoPoint((int)(37.441*1E6), (int)(-122.1419*1E6)), 15);
 	}

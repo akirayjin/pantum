@@ -15,10 +15,6 @@ public final class R {
     }
     public static final class dimen {
         /**  Default screen margins, per the Android Design guidelines. 
-
-         Customize dimensions originally defined in res/values/dimens.xml (such as
-         screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
-    
          */
         public static final int activity_horizontal_margin=0x7f040000;
         public static final int activity_vertical_margin=0x7f040001;
@@ -28,24 +24,33 @@ public final class R {
         public static final int pantum_logo_icon=0x7f020001;
     }
     public static final class id {
-        public static final int action_settings=0x7f09000a;
-        public static final int bottom_layout=0x7f090009;
-        public static final int favourite_button=0x7f090002;
-        public static final int location_text=0x7f090006;
-        public static final int map=0x7f090008;
-        public static final int opening=0x7f090004;
-        public static final int opening_map=0x7f090007;
-        public static final int scroll_view=0x7f090003;
-        public static final int station_spinner=0x7f090000;
-        public static final int text=0x7f090001;
-        public static final int webview=0x7f090005;
+        public static final int action_settings=0x7f09000f;
+        public static final int bottom_layout=0x7f09000a;
+        public static final int credit_button=0x7f09000c;
+        public static final int credit_image=0x7f09000e;
+        public static final int credit_list=0x7f090000;
+        public static final int credit_text=0x7f09000d;
+        public static final int favourite_button=0x7f090003;
+        public static final int location_button=0x7f09000b;
+        public static final int location_text=0x7f090007;
+        public static final int map=0x7f090009;
+        public static final int opening=0x7f090005;
+        public static final int opening_map=0x7f090008;
+        public static final int scroll_view=0x7f090004;
+        public static final int station_spinner=0x7f090001;
+        public static final int text=0x7f090002;
+        public static final int webview=0x7f090006;
     }
     public static final class layout {
-        public static final int activity_main=0x7f030000;
+        public static final int activity_credit=0x7f030000;
+        public static final int activity_main=0x7f030001;
+        public static final int credit_line_one=0x7f030002;
+        public static final int credit_line_two=0x7f030003;
     }
     public static final class menu {
-        public static final int main=0x7f080000;
-        public static final int splash=0x7f080001;
+        public static final int credit=0x7f080000;
+        public static final int main=0x7f080001;
+        public static final int splash=0x7f080002;
     }
     public static final class string {
         public static final int action_settings=0x7f050001;
@@ -57,6 +62,7 @@ public final class R {
         public static final int no_data=0x7f050006;
         public static final int no_station_selected=0x7f050004;
         public static final int station_prompt=0x7f050005;
+        public static final int title_activity_credit=0x7f05000b;
         public static final int title_activity_main=0x7f050003;
         public static final int web_title=0x7f050007;
     }
@@ -72,17 +78,6 @@ public final class R {
             backward-compatibility can go here.
 
         
-
-        Base application theme for API 11+. This theme completely replaces
-        AppBaseTheme from res/values/styles.xml on API 11+ devices.
-    
- API 11 theme customizations can go here. 
-
-        Base application theme for API 14+. This theme completely replaces
-        AppBaseTheme from BOTH res/values/styles.xml and
-        res/values-v11/styles.xml on API 14+ devices.
-    
- API 14 theme customizations can go here. 
          */
         public static final int AppBaseTheme=0x7f070000;
         /**  Application theme. 

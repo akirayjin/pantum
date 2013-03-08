@@ -14,9 +14,10 @@
         android:allowBackup="true"
         android:icon="@drawable/pantum_logo_icon"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@android:style/Theme.Light.NoTitleBar"  >
         <activity
             android:name="com.pantum.MainActivity"
+            android:configChanges="orientation"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +27,11 @@
         </activity>
 
         <uses-library android:name="com.google.android.maps" />
+
+        <activity
+            android:name="com.pantum.CreditActivity"
+            android:label="@string/title_activity_credit" >
+        </activity>
     </application>
 
 </manifest>

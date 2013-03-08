@@ -77,4 +77,6 @@
         <item>Universitaspancasila</item>
     </string-array>
 
+    <string name="title_activity_credit">CreditActivity</string>
+
 </resources>

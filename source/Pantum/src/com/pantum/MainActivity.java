@@ -1,10 +1,12 @@
 package com.pantum;
 
 import java.util.HashMap;
+import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,8 +21,11 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
+import com.google.android.maps.Overlay;
+import com.google.android.maps.OverlayItem;
 
 public class MainActivity extends MapActivity {
 	public WebView wv;
@@ -57,15 +62,26 @@ public class MainActivity extends MapActivity {
 				startActivity(intent);
 			}
 		});
-
-		//setMapZoomPoint(new GeoPoint((int)(37.441*1E6), (int)(-122.1419*1E6)), 15);
+		
+		List<Overlay> mapOverlays = mapView.getOverlays();
+		Drawable drawable = this.getResources().getDrawable(R.drawable.train);
+		MapItemizedOverlay itemizedoverlay = new MapItemizedOverlay(drawable, this);
+		
+		float lat = -6.592725f;
+		float lng = 106.792785f;
+		GeoPoint gp = new GeoPoint((int)(lat * 1E6), (int)(lng * 1E6));
+		GeoPoint point = new GeoPoint(19240000,-99120000);
+		OverlayItem overlayitem = new OverlayItem(gp, "Stasiun Bogor", "Stasiun Bogor");
+		itemizedoverlay.addOverlay(overlayitem);
+		mapOverlays.add(itemizedoverlay);
+		setMapZoomPoint(gp, 15);
 	}
 
-//	private void setMapZoomPoint(GeoPoint geoPoint, int zoomLevel) {
-//		mapView.getController().setCenter(geoPoint);
-//		mapView.getController().setZoom(zoomLevel);
-//		mapView.postInvalidate();
-//	}
+	private void setMapZoomPoint(GeoPoint geoPoint, int zoomLevel) {
+		mapView.getController().setCenter(geoPoint);
+		mapView.getController().setZoom(zoomLevel);
+		mapView.postInvalidate();
+	}
 	
 	private void setMapViewLayout(){
 		mapView = (MapView)findViewById(R.id.map);

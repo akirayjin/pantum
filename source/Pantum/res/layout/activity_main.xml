@@ -105,9 +105,12 @@
                 android:id="@+id/map"
                 android:layout_width="fill_parent"
                 android:layout_height="200dip"
-                android:apiKey="09AzsycAUdc_rVZn6fthMS4B9amm5ei5CVDV_Qw"
+                android:apiKey="0Ll4R4yiEBJ8ay8jpA15KNUQJb922ap6VeH9oHA"
                 android:clickable="true"
                 android:visibility="gone" />
+            <!-- 0Ll4R4yiEBJ95IxydU59EQKVPlGlXs5aHXU0EOQ -->
+            <!-- 09AzsycAUdc_rVZn6fthMS4B9amm5ei5CVDV_Qw -->
+            <!-- 0Ll4R4yiEBJ8ay8jpA15KNUQJb922ap6VeH9oHA -->
 
             <LinearLayout
                 android:id="@+id/bottom_layout"

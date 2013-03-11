@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebSettings;
@@ -26,6 +27,7 @@ import com.google.android.maps.MapActivity;
 import com.google.android.maps.MapView;
 import com.google.android.maps.Overlay;
 import com.google.android.maps.OverlayItem;
+import com.pantum.utility.PantumDatabase;
 
 public class MainActivity extends MapActivity {
 	public WebView wv;
@@ -37,6 +39,7 @@ public class MainActivity extends MapActivity {
 	public MapView mapView;
 	public TextView locationText;
 	public Button locationButton, creditButton;
+	public PantumDatabase pd;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,33 +51,21 @@ public class MainActivity extends MapActivity {
 		locationText = (TextView)findViewById(R.id.location_text);
 		locationButton = (Button)findViewById(R.id.location_button);
 		creditButton = (Button)findViewById(R.id.credit_button);
-		createMapForStationCode();
 		activity = this.getApplicationContext();
 		setWebViewLayout();
 		addListenerOnSpinnerItemSelection();
 		setMapViewLayout();
-		
+		pd = new PantumDatabase(this.getApplicationContext());
+		map = pd.getStationsCodeMap();
+		Log.i(this.toString(), map.toString());
 		creditButton.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View arg0) {
 				Intent intent = new Intent(MainActivity.this, CreditActivity.class);
 				startActivity(intent);
 			}
 		});
-		
-		List<Overlay> mapOverlays = mapView.getOverlays();
-		Drawable drawable = this.getResources().getDrawable(R.drawable.train);
-		MapItemizedOverlay itemizedoverlay = new MapItemizedOverlay(drawable, this);
-		
-		float lat = -6.592725f;
-		float lng = 106.792785f;
-		GeoPoint gp = new GeoPoint((int)(lat * 1E6), (int)(lng * 1E6));
-		GeoPoint point = new GeoPoint(19240000,-99120000);
-		OverlayItem overlayitem = new OverlayItem(gp, "Stasiun Bogor", "Stasiun Bogor");
-		itemizedoverlay.addOverlay(overlayitem);
-		mapOverlays.add(itemizedoverlay);
-		setMapZoomPoint(gp, 15);
 	}
 
 	private void setMapZoomPoint(GeoPoint geoPoint, int zoomLevel) {
@@ -82,11 +73,23 @@ public class MainActivity extends MapActivity {
 		mapView.getController().setZoom(zoomLevel);
 		mapView.postInvalidate();
 	}
-	
+
 	private void setMapViewLayout(){
 		mapView = (MapView)findViewById(R.id.map);
 		mapView.setBuiltInZoomControls(true);
 		mapView.postInvalidate();
+	}
+
+	public void showStationLocationOnMap(String stationName){
+		mapView.getOverlays().clear();
+		Drawable drawable = this.getResources().getDrawable(R.drawable.train);
+		MapItemizedOverlay itemizedoverlay = new MapItemizedOverlay(drawable, this);
+		GeoPoint gp = pd.getStationGeoPoint(stationName);
+		OverlayItem overlayitem = new OverlayItem(gp, "", "");
+		itemizedoverlay.addOverlay(overlayitem);
+		List<Overlay> mapOverlays = mapView.getOverlays();
+		mapOverlays.add(itemizedoverlay);
+		setMapZoomPoint(gp, 17);
 	}
 
 
@@ -116,77 +119,6 @@ public class MainActivity extends MapActivity {
 		stationSpinner.setOnItemSelectedListener(new CustomOnItemSelectedListener());
 	}
 
-	public void createMapForStationCode(){
-		map = new HashMap<String, String>();
-		map.put("Jakartakota", "JAK");
-		map.put("Jayakarta", "JYK");
-		map.put("Manggabesar", "MGB");
-		map.put("Sawahbesar", "SW");
-		map.put("Juanda", "JUA");
-		map.put("Gambir", "GMR");
-		map.put("Gondangdia", "GDD");
-		map.put("Cikini", "CKI");
-		map.put("Manggarai", "MRI");
-		map.put("Tebet", "TEB");
-		map.put("Cawang", "CW");
-		map.put("Durenkalibata", "DRN");
-		map.put("Pasarminggubaru", "PSMB");
-		map.put("Pasarminggu", "PSM");
-		map.put("Tanjungbarat", "TNT");
-		map.put("Lentengagung", "LNA");
-		map.put("Universitaspancasila", "UP");
-		map.put("Universitasindonesia", "UI");
-		map.put("Pondokcina", "POC");
-		map.put("Depokbaru", "DPB");
-		map.put("Depok", "DP");
-		map.put("Citayam", "CTA");
-		map.put("Bojonggede", "BJD");
-		map.put("Cilebut", "CLT");
-		map.put("Bogor", "BOO");
-		map.put("Bekasi", "BKS");
-		map.put("Kranji", "KRI");
-		map.put("Cakung", "CUK");
-		map.put("Klenderbaru", "KLDB");
-		map.put("Buaran", "BUA");
-		map.put("Klender", "KLD");
-		map.put("Jatinegara", "JNG");
-		map.put("Pondokjati", "POK");
-		map.put("Kramat", "KMT");
-		map.put("Gangsentiong", "GST");
-		map.put("Pasarsenen", "PSE");
-		map.put("Kemayoran", "KMO");
-		map.put("Rajawali", "RJW");
-		map.put("Kampungbandan", "KPB");
-		map.put("Ancol", "AC");
-		map.put("Tanjungpriok", "TPK");
-		map.put("Tanggerang", "TNG");
-		map.put("Batuceper", "BPR");
-		map.put("Poris", "PI");
-		map.put("Kalideres", "KDS");
-		map.put("Rawabuaya", "RW");
-		map.put("Bojongindah", "BOI");
-		map.put("Pesing", "PSG");
-		map.put("Duri", "DU");
-		map.put("Tanahabang", "THB");
-		map.put("Angke", "AK");
-		map.put("Karet", "KRT");
-		map.put("Sudirman", "SUD");
-		map.put("Serpong", "SRP");
-		map.put("Rawabuntu", "RU");
-		map.put("Sudimara", "SDM");
-		map.put("Jurangmangu", "JRU");
-		map.put("Podokranji", "PDJ");
-		map.put("Kebayoran", "KBY");
-		map.put("Palmerah", "PLM");
-	}
-
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		// Inflate the menu; this adds items to the action bar if it is present.
-//		getMenuInflater().inflate(R.menu.main, menu);
-//		return true;
-//	}
-
 	public class CustomOnItemSelectedListener implements OnItemSelectedListener {
 
 		public CustomOnItemSelectedListener(){}
@@ -197,11 +129,13 @@ public class MainActivity extends MapActivity {
 			boolean isFound = false;
 			for (int i = 0; i < map.size() && !isFound; i++) {
 				String currentKey = map.get(currentStation);
+				Log.i(this.toString(), currentStation+" "+currentKey);
 				if(currentKey != null){
 					setDataVisibility(true);
 					wv.loadUrl("http://infoka.krl.co.id/to/"+currentKey);
 					stationName.setText("Stasiun "+currentStation);
 					locationText.setText("Lokasi Stasiun "+currentStation);
+					showStationLocationOnMap(currentStation);
 					isFound = true;
 				}else{
 					setDataVisibility(false);
@@ -214,7 +148,7 @@ public class MainActivity extends MapActivity {
 		public void onNothingSelected(AdapterView<?> arg0) {}
 
 	}
-	
+
 	public void setDataVisibility(boolean state){
 		if(state){
 			wv.setVisibility(View.VISIBLE);

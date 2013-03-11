@@ -17,11 +17,11 @@
         <item>Pilih stasiun anda</item>
         <item>Ancol</item>
         <item>Angke</item>
-        <item>Batuceper</item>
+        <item>Batu Ceper</item>
         <item>Bekasi</item>
         <item>Bogor</item>
         <item>Bojonggede</item>
-        <item>Bojongindah</item>
+        <item>Bojong Indah</item>
         <item>Buaran</item>
         <item>Cakung</item>
         <item>Cawang</item>
@@ -29,52 +29,52 @@
         <item>Cilebut</item>
         <item>Citayam</item>
         <item>Depok</item>
-        <item>Depokbaru</item>
-        <item>Durenkalibata</item>
+        <item>Depok Baru</item>
+        <item>Duren Kalibata</item>
         <item>Duri</item>
         <item>Gambir</item>
-        <item>Gangsentiong</item>
+        <item>Gang Sentiong</item>
         <item>Gondangdia</item>
-        <item>Jakartakota</item>
+        <item>Jakarta Kota</item>
         <item>Jatinegara</item>
         <item>Jayakarta</item>
         <item>Juanda</item>
         <item>Jurangmangu</item>
         <item>Kalideres</item>
-        <item>Kampungbandan</item>
+        <item>Kampung Bandan</item>
         <item>Karet</item>
         <item>Kebayoran</item>
         <item>Kemayoran</item>
         <item>Klender</item>
-        <item>Klenderbaru</item>
+        <item>Klender Baru</item>
         <item>Kramat</item>
         <item>Kranji</item>
-        <item>Lentengagung</item>
-        <item>Manggabesar</item>
+        <item>Lenteng Agung</item>
+        <item>Mangga Besar</item>
         <item>Manggarai</item>
         <item>Palmerah</item>
-        <item>Pasarminggu</item>
-        <item>Pasarminggubaru</item>
-        <item>Pasarsenen</item>
+        <item>Pasar Minggu</item>
+        <item>Pasar Minggu Baru</item>
+        <item>Pasar Senen</item>
         <item>Pesing</item>
         <item>Podokranji</item>
-        <item>Pondokcina</item>
-        <item>Pondokjati</item>
+        <item>Pondok Cina</item>
+        <item>Pondok Jati</item>
         <item>Poris</item>
         <item>Rajawali</item>
-        <item>Rawabuaya</item>
-        <item>Rawabuntu</item>
-        <item>Sawahbesar</item>
+        <item>Rawa Buaya</item>
+        <item>Rawa Buntu</item>
+        <item>Sawah Besar</item>
         <item>Serpong</item>
         <item>Sudimara</item>
         <item>Sudirman</item>
-        <item>Tanahabang</item>
+        <item>Tanah Abang</item>
         <item>Tanggerang</item>
-        <item>Tanjungbarat</item>
-        <item>Tanjungpriok</item>
+        <item>Tanjung Barat</item>
+        <item>Tanjung Priok</item>
         <item>Tebet</item>
-        <item>Universitasindonesia</item>
-        <item>Universitaspancasila</item>
+        <item>Universitas Indonesia</item>
+        <item>Universitas Pancasila</item>
     </string-array>
 
     <string name="title_activity_credit">CreditActivity</string>

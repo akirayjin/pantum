@@ -46,7 +46,6 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dip"
             android:orientation="vertical" >
             
             <TextView
@@ -101,12 +100,11 @@
                     android:text="@string/no_data" />
             </LinearLayout>
 
-            <com.pantum.CustomMapView
+            <com.google.android.maps.MapView
                 android:id="@+id/map"
                 android:layout_width="fill_parent"
                 android:layout_height="200dip"
-                android:apiKey="0Ll4R4yiEBJ8ay8jpA15KNUQJb922ap6VeH9oHA"
-                android:clickable="true"
+                android:apiKey="09AzsycAUdc_rVZn6fthMS4B9amm5ei5CVDV_Qw"
                 android:visibility="gone" />
             <!-- 0Ll4R4yiEBJ95IxydU59EQKVPlGlXs5aHXU0EOQ -->
             <!-- 09AzsycAUdc_rVZn6fthMS4B9amm5ei5CVDV_Qw -->

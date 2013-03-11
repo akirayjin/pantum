@@ -7,9 +7,9 @@
 
     <ImageView
         android:id="@+id/credit_image"
-        android:layout_width="wrap_content"
+        android:layout_width="100dip"
         android:layout_height="100dip"
-        android:src="@drawable/ic_launcher"
+        android:src="@drawable/default_profile"
         android:layout_gravity="right" 
         android:layout_weight=".1"/>
     <TextView

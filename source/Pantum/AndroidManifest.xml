@@ -15,18 +15,17 @@
         android:icon="@drawable/pantum_logo_icon"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Light.NoTitleBar"  >
+        <uses-library android:name="com.google.android.maps" />
         <activity
             android:name="com.pantum.MainActivity"
-            android:configChanges="orientation"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:configChanges="orientation|keyboard|screenLayout|screenSize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <uses-library android:name="com.google.android.maps" />
 
         <activity
             android:name="com.pantum.CreditActivity"

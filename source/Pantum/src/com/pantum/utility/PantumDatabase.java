@@ -14,10 +14,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.pantum.R;
-
 import android.content.Context;
-import android.util.Log;
+
+import com.google.android.maps.GeoPoint;
+import com.pantum.R;
 
 public class PantumDatabase {
 	private Context context;
@@ -60,7 +60,6 @@ public class PantumDatabase {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		Log.i(this.toString(), getStationCode("Bogor"));
 	}
 
 	public String getStationCode(String stationName){
@@ -91,6 +90,25 @@ public class PantumDatabase {
 			e.printStackTrace();
 		}
 		return response;
+	}
+	
+	public GeoPoint getStationGeoPoint(String stationName){
+		GeoPoint response = null;
+		try {
+			for (int i = 0; i < stationsArray.length(); i++) {
+				String currentStationName = stationsArray.getJSONObject(i).getString("name");
+				if(stationName.equalsIgnoreCase(currentStationName)){
+					float latitude = Float.valueOf((String) stationsArray.getJSONObject(i).get("lat"));
+					float longitude = Float.valueOf((String) stationsArray.getJSONObject(i).get("long"));
+					response = new GeoPoint((int)(latitude * 1E6), (int)(longitude * 1E6));
+				}
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return response;
+		
 	}
 
 }

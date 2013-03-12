@@ -18,7 +18,7 @@ public class CreditActivity extends Activity {
 		ArrayList<String> name = new ArrayList<String>();
 		name.add("Eka Cakra A W");
 		name.add("Guntur Suparno Putro");
-		name.add("kedua");
+		name.add("Budiharja Kusma");
 		name.add("Muhammad Ikhwan");
 		
 		adapter = new CreditListAdapter(this.getApplicationContext(), name);

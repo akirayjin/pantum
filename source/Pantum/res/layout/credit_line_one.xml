@@ -9,15 +9,16 @@
         android:id="@+id/credit_text"
         android:layout_width="0dip"
         android:layout_height="fill_parent"
-        android:layout_weight="9" 
-        android:gravity="center_vertical"/>
+        android:layout_weight="9"
+        android:gravity="center_vertical"
+        android:textColor="@android:color/black" />
 
     <ImageView
         android:id="@+id/credit_image"
         android:layout_width="100dip"
         android:layout_height="100dip"
-        android:src="@drawable/default_profile"
-        android:layout_gravity="right" 
-        android:layout_weight=".1"/>
+        android:layout_gravity="right"
+        android:layout_weight=".1"
+        android:src="@drawable/default_profile" />
 
 </LinearLayout>

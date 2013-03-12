@@ -9,24 +9,25 @@
         android:targetSdkVersion="15" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/pantum_logo_icon"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Light.NoTitleBar"  >
+        android:theme="@android:style/Theme.Light.NoTitleBar" >
         <uses-library android:name="com.google.android.maps" />
+
         <activity
             android:name="com.pantum.MainActivity"
-            android:label="@string/app_name"
-            android:configChanges="orientation|keyboard|screenLayout|screenSize" >
+            android:configChanges="orientation|keyboard|screenLayout|screenSize"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.pantum.CreditActivity"
             android:label="@string/title_activity_credit" >

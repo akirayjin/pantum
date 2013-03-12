@@ -3,15 +3,16 @@
 
     <string name="app_name">Pantum</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="no_station_selected">Pilih stasiun dulu</string>
     <string name="station_prompt">Pilih Stasiun:</string>
     <string name="no_data">Tabel posisi KRL akan muncul disini.</string>
+    <string name="no_data_map">Posisi Stasiun di peta akan muncul disini.</string>
     <string name="web_title">Info KRL</string>
     <string name="map_title">Lokasi Stasiun</string>
     <string name="location_button">Petunjuk Arah</string>
     <string name="credit_button">Kredit</string>
+    <string name="favorite_text">Stasiun Favorit</string>
 
     <string-array name="station_arrays">
         <item>Pilih stasiun anda</item>

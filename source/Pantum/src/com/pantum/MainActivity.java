@@ -79,11 +79,13 @@ public class MainActivity extends MapActivity {
 					Drawable starImage = getResources().getDrawable(R.drawable.star_blank_50_50);
 					favoriteButton.setImageDrawable(starImage);
 					Utility.savePreference(currentStationName, false, MainActivity.this);
+					isFavorited = Utility.loadBooleanPreferences(currentStationName, MainActivity.this);
 				}else{
 					if(!currentStationName.equalsIgnoreCase("")){
 						Drawable starImage = getResources().getDrawable(R.drawable.star_orange_50_50);
 						favoriteButton.setImageDrawable(starImage);
 						Utility.savePreference(currentStationName, true, MainActivity.this);
+						isFavorited = Utility.loadBooleanPreferences(currentStationName, MainActivity.this);
 					}
 				}
 			}

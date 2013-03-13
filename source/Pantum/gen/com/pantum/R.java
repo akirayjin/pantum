@@ -28,20 +28,20 @@ public final class R {
         public static final int train=0x7f020005;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a000d;
-        public static final int bottom_layout=0x7f0a0006;
-        public static final int credit_image=0x7f0a000c;
+        public static final int credit_image=0x7f0a000b;
         public static final int credit_list=0x7f0a0000;
-        public static final int credit_text=0x7f0a000b;
+        public static final int credit_text=0x7f0a000a;
         public static final int favorite_list=0x7f0a0005;
         public static final int favorite_view=0x7f0a0004;
         public static final int favourite_button=0x7f0a0003;
-        public static final int location_text=0x7f0a0009;
-        public static final int map=0x7f0a000a;
-        public static final int scroll_view=0x7f0a0007;
+        public static final int location_text=0x7f0a0008;
+        public static final int map=0x7f0a0009;
+        public static final int menu_credit=0x7f0a000d;
+        public static final int menu_direction=0x7f0a000c;
+        public static final int scroll_view=0x7f0a0006;
         public static final int station_spinner=0x7f0a0001;
         public static final int text=0x7f0a0002;
-        public static final int webview=0x7f0a0008;
+        public static final int webview=0x7f0a0007;
     }
     public static final class layout {
         public static final int activity_credit=0x7f030000;
@@ -50,27 +50,26 @@ public final class R {
         public static final int credit_line_two=0x7f030003;
     }
     public static final class menu {
-        public static final int credit=0x7f090000;
-        public static final int main=0x7f090001;
-        public static final int splash=0x7f090002;
+        public static final int main=0x7f090000;
     }
     public static final class raw {
         public static final int pantum_database=0x7f040000;
     }
     public static final class string {
-        public static final int action_settings=0x7f060001;
         public static final int app_name=0x7f060000;
-        public static final int credit_button=0x7f06000a;
-        public static final int favorite_text=0x7f06000b;
-        public static final int location_button=0x7f060009;
-        public static final int map_title=0x7f060008;
-        public static final int no_data=0x7f060005;
-        public static final int no_data_map=0x7f060006;
-        public static final int no_station_selected=0x7f060003;
-        public static final int station_prompt=0x7f060004;
-        public static final int title_activity_credit=0x7f06000c;
-        public static final int title_activity_main=0x7f060002;
-        public static final int web_title=0x7f060007;
+        public static final int credit_button=0x7f06000b;
+        public static final int favorite_text=0x7f06000c;
+        public static final int location_button=0x7f06000a;
+        public static final int map_title=0x7f060009;
+        public static final int menu_credit_text=0x7f060001;
+        public static final int menu_direction_text=0x7f060002;
+        public static final int no_data=0x7f060006;
+        public static final int no_data_map=0x7f060007;
+        public static final int no_station_selected=0x7f060004;
+        public static final int station_prompt=0x7f060005;
+        public static final int title_activity_credit=0x7f06000d;
+        public static final int title_activity_main=0x7f060003;
+        public static final int web_title=0x7f060008;
     }
     public static final class style {
         /** 

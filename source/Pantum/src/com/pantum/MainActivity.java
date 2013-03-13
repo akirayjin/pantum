@@ -7,7 +7,11 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.webkit.WebSettings;
@@ -62,6 +66,7 @@ public class MainActivity extends MapActivity {
 		favoriteList.setAdapter(adapter);
 		favoriteList.setOnItemClickListener(new OnItemClickListener() {
 
+			@SuppressWarnings({ "rawtypes", "unchecked" })
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
 				ArrayAdapter myAdap = (ArrayAdapter) stationSpinner.getAdapter(); //cast to an ArrayAdapter
@@ -225,7 +230,7 @@ public class MainActivity extends MapActivity {
 		}
 	}
 	
-	public void onCreditClick(View v){
+	public void onCreditClick(){
 		Intent intent = new Intent(MainActivity.this, CreditActivity.class);
 		startActivity(intent);
 	}
@@ -233,6 +238,29 @@ public class MainActivity extends MapActivity {
 	@Override
 	protected boolean isRouteDisplayed() {
 		return false;
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.main, menu);
+	    return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle item selection
+	    switch (item.getItemId()) {
+	        case R.id.menu_credit:
+	        	onCreditClick();
+	            return true;
+	        case R.id.menu_direction:
+	        	Uri uri = Uri.parse("geo:" + pd.getLatitude(currentStationName)  + "," + pd.getLongitude(currentStationName) +"?z=16");
+	        	Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+	        	startActivity(intent);
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
 	}
 
 }

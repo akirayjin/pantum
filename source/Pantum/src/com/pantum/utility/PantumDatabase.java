@@ -108,7 +108,38 @@ public class PantumDatabase {
 		}
 
 		return response;
-		
+	}
+	
+	public String getLatitude(String stationName){
+		String response = null;
+		try {
+			for (int i = 0; i < stationsArray.length(); i++) {
+				String currentStationName = stationsArray.getJSONObject(i).getString("name");
+				if(stationName.equalsIgnoreCase(currentStationName)){
+					response = (String) stationsArray.getJSONObject(i).get("lat");
+				}
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return response;
+	}
+	
+	public String getLongitude(String stationName){
+		String response = null;
+		try {
+			for (int i = 0; i < stationsArray.length(); i++) {
+				String currentStationName = stationsArray.getJSONObject(i).getString("name");
+				if(stationName.equalsIgnoreCase(currentStationName)){
+					response = (String) stationsArray.getJSONObject(i).get("long");
+				}
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return response;
 	}
 
 }

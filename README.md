@@ -2,7 +2,7 @@ pantum
 ======
 
 Pantauan Transportasi Umum secara real-time
-version 0.3.1
+version 0.4
 
 Feature:
 - untuk saat ini hanya pantauan posisi kereta
@@ -11,13 +11,20 @@ Feature:
 - favorit stasiun dan pilih dari daftar favorit
 
 changelog:
+version 0.4
+- remove mapview
+- redesign table using native ui not web anymore
+- refresh data automatically
+- when in data table show press back will bring to favourite list
+- give background color and text color for relation class
+
 version 0.3.1
-- fix favorite button not able to click second time
+- fix favourite button not able to click second time
 
 version 0.3
 - complete pin overlay for all station
 - credit page is complete
-- adding favorite function
+- adding favourite function
 - remove map zoom
 - full screen table and map
 

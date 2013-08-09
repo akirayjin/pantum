@@ -14,6 +14,11 @@
     <string name="location_button">Petunjuk Arah</string>
     <string name="credit_button">Kredit</string>
     <string name="favorite_text">Stasiun Favorit</string>
+    <string name="no_ka">NO KA</string>
+    <string name="tujuan_ka">TUJUAN</string>
+    <string name="jadwal_ka">JADWAL</string>
+    <string name="posisi_ka">POSISI</string>
+    <string name="jalur_ka">JALUR</string>
 
     <string-array name="station_arrays">
         <item>Pilih stasiun anda</item>

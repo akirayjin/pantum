@@ -2,12 +2,12 @@ package com.pantum.utility;
 
 import java.util.ArrayList;
 
-import com.pantum.R;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+
+import com.pantum.R;
 
 public class Utility {
 
@@ -90,5 +90,4 @@ public class Utility {
 		}
 		return favoritedArray;
 	}
-
 }

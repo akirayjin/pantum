@@ -15,6 +15,14 @@
         android:layout_height="40dip"
         android:orientation="horizontal" >
 
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@android:style/Widget.ProgressBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="10dp"
+            android:visibility="invisible" />
+
         <TextView
             android:id="@+id/text"
             android:layout_width="fill_parent"
@@ -32,7 +40,7 @@
             android:layout_gravity="center_vertical|right"
             android:layout_marginRight="5dip"
             android:src="@drawable/star_blank_50_50"
-            android:visibility="gone" />
+            android:visibility="visible" />
     </FrameLayout>
 
     <View
@@ -41,7 +49,6 @@
         android:background="@android:color/darker_gray" />
 
     <LinearLayout
-        android:id="@+id/favorite_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical" >
@@ -51,113 +58,61 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />
 
-        <!-- <View
+        <RelativeLayout
+            android:id="@+id/containerList"
             android:layout_width="fill_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="5dip"
-            android:layout_marginTop="5dip"
-            android:background="@android:color/darker_gray" />
-
-        <LinearLayout
-            android:id="@+id/bottom_layout"
-            android:layout_width="fill_parent"
-            android:layout_height="50dip"
-            android:orientation="horizontal" >
-
-            <Button
-                android:layout_width="0dip"
-                android:layout_height="fill_parent"
-                android:layout_weight=".1"
-                android:text="@string/location_button" />
-
-            <Button
-                android:layout_width="0dip"
-                android:layout_height="fill_parent"
-                android:layout_weight=".1"
-                android:onClick="onCreditClick"
-                android:text="@string/credit_button" />
-        </LinearLayout> -->
-    </LinearLayout>
-
-    <ScrollView
-        android:id="@+id/scroll_view"
-        android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:layout_weight="9"
-        android:fillViewport="true"
-        android:scrollbars="none"
-        android:visibility="gone" >
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dip"
-                android:text="@string/web_title"
-                android:textColor="@android:color/black" />
-
-            <com.pantum.CustomWebView
-                android:id="@+id/webview"
-                android:layout_width="fill_parent"
-                android:layout_height="150dip"
-                android:visibility="visible" />
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="5dip"
-                android:layout_marginTop="5dip"
-                android:background="@android:color/darker_gray" />
-
-            <TextView
-                android:id="@+id/location_text"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dip"
-                android:text="@string/map_title"
-                android:textColor="@android:color/black" />
-
-            <com.google.android.maps.MapView
-                android:id="@+id/map"
-                android:layout_width="fill_parent"
-                android:layout_height="200dip"
-                android:apiKey="0Ll4R4yiEBJ8ay8jpA15KNUQJb922ap6VeH9oHA"
-                android:visibility="visible" />
-            <!-- 0Ll4R4yiEBJ95IxydU59EQKVPlGlXs5aHXU0EOQ -->
-            <!-- 09AzsycAUdc_rVZn6fthMS4B9amm5ei5CVDV_Qw -->
-            <!-- 0Ll4R4yiEBJ8ay8jpA15KNUQJb922ap6VeH9oHA -->
-
-            <!-- <View
-                android:layout_width="fill_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="5dip"
-                android:layout_marginTop="5dip"
-                android:background="@android:color/darker_gray" />
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:visibility="gone" >
 
             <LinearLayout
-                android:id="@+id/bottom_layout"
+                android:id="@+id/headerList"
                 android:layout_width="fill_parent"
-                android:layout_height="50dip"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal" >
 
-                <Button
+                <TextView
                     android:layout_width="0dip"
-                    android:layout_height="fill_parent"
-                    android:layout_weight=".1"
-                    android:text="@string/location_button" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.08"
+                    android:text="@string/no_ka"
+                    android:textColor="@android:color/black" />
 
-                <Button
+                <TextView
                     android:layout_width="0dip"
-                    android:layout_height="fill_parent"
-                    android:layout_weight=".1"
-                    android:onClick="onCreditClick"
-                    android:text="@string/credit_button" />
-            </LinearLayout> -->
-        </LinearLayout>
-    </ScrollView>
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:text="@string/tujuan_ka"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.14"
+                    android:text="@string/jadwal_ka"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.18"
+                    android:text="@string/posisi_ka"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.05"
+                    android:text="@string/jalur_ka"
+                    android:textColor="@android:color/black" />
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/schedule_list"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@+id/headerList" />
+        </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

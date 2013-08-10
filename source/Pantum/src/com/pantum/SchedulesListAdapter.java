@@ -43,13 +43,13 @@ public class SchedulesListAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ArrayList<String> currentRow = rowArray.get(position);
 		View currentView = null;
-		
+
 		if(currentRow.size() == 1){
 			currentView = mInflater.inflate(R.layout.schedule_row_empty, null);
 		}else{
 			currentView = mInflater.inflate(R.layout.schedule_rows, null);
 		}
-		
+
 		ViewHolder holder;
 		if (convertView == null && currentRow != null) {
 			holder = new ViewHolder();
@@ -97,7 +97,7 @@ public class SchedulesListAdapter extends BaseAdapter {
 	public void refreshList(){
 		notifyDataSetChanged();
 	}
-	
+
 	private void setColorUI(String backgroundColor, String textColor, ViewHolder holder){
 		holder.tujuanKa.setBackgroundColor(Color.parseColor(backgroundColor));
 		holder.tujuanKa.setTextColor(Color.parseColor(textColor));

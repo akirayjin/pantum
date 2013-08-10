@@ -2,7 +2,7 @@ pantum
 ======
 
 Pantauan Transportasi Umum secara real-time
-version 0.4
+version 0.4.1
 
 Feature:
 - untuk saat ini hanya pantauan posisi kereta
@@ -11,6 +11,11 @@ Feature:
 - favorit stasiun dan pilih dari daftar favorit
 
 changelog:
+version 0.4.1
+- fix bug for some station not showing
+- fix crash when only 1 train in one station (because not able to get cls for background and text color)
+- added Serpong - Parung Panjang - Maja loopline.
+
 version 0.4
 - remove mapview
 - redesign table using native ui not web anymore

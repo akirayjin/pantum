@@ -168,6 +168,7 @@ public class MainActivity extends Activity {
 	{
 		public void processHTML(String html)
 		{
+			Log.i("Row table", html);
 			String[] tables = html.split("</tr>");
 			rows = new ArrayList<ArrayList<String>>();
 			for (int i = 0; i < tables.length; i++) {
@@ -175,14 +176,16 @@ public class MainActivity extends Activity {
 				ArrayList<String> coloumnArray = new ArrayList<String>();
 				for (int j = 0; j < coloumn.length; j++) {
 					String text = Html.fromHtml(coloumn[j]).toString();
+					Log.i("Row table", text);
 					coloumnArray.add(text);
 				}
-				if(tables.length > 1){
+				if(tables.length >= 1 && tables[i].contains("cls")){
 					String currentTablesText = tables[i];
 					String classTrain = currentTablesText.substring(11, 17);
 					if(classTrain.contains("\"")){
 						classTrain = classTrain.substring(0, classTrain.length()-1);
 					}
+					Log.i("Row table", classTrain);
 					coloumnArray.add(classTrain);
 				}
 				rows.add(coloumnArray);

@@ -32,9 +32,14 @@
         <item>Buaran</item>
         <item>Cakung</item>
         <item>Cawang</item>
+        <item>Cicayur</item>
         <item>Cikini</item>
+        <item>Cikoya</item>
         <item>Cilebut</item>
+        <item>Cileujit</item>
+        <item>Cisauk</item>
         <item>Citayam</item>
+        <item>Daru</item>
         <item>Depok</item>
         <item>Depok Baru</item>
         <item>Duren Kalibata</item>
@@ -57,15 +62,17 @@
         <item>Kramat</item>
         <item>Kranji</item>
         <item>Lenteng Agung</item>
+        <item>Maja</item>
         <item>Mangga Besar</item>
         <item>Manggarai</item>
         <item>Palmerah</item>
+        <item>Parung Panjang</item>
         <item>Pasar Minggu</item>
         <item>Pasar Minggu Baru</item>
         <item>Pasar Senen</item>
         <item>Pesing</item>
-        <item>Podokranji</item>
         <item>Pondok Cina</item>
+        <item>Pondok Ranji</item>
         <item>Pondok Jati</item>
         <item>Poris</item>
         <item>Rajawali</item>
@@ -80,6 +87,8 @@
         <item>Tanjung Barat</item>
         <item>Tanjung Priok</item>
         <item>Tebet</item>
+        <item>Tenjo</item>
+        <item>Tigaraksa</item>
         <item>Universitas Indonesia</item>
         <item>Universitas Pancasila</item>
     </string-array>

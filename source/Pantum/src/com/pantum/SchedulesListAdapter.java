@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.pantum.utility.PantumDatabase;
@@ -64,9 +65,22 @@ public class SchedulesListAdapter extends BaseAdapter {
 				holder.jadwalKa = (TextView)convertView.findViewById(R.id.jadwal_ka);
 				holder.posisiKa = (TextView)convertView.findViewById(R.id.posisi_ka);
 				holder.jalurKa = (TextView)convertView.findViewById(R.id.jalur_ka);
+				holder.wrapperLayout = (LinearLayout)convertView.findViewById(R.id.schedule_row_layout);
+				holder.noKaText = (TextView)convertView.findViewById(R.id.no_ka_text);
+				holder.tujuanKaText = (TextView)convertView.findViewById(R.id.tujuan_ka_text);
+				holder.jadwalKaText = (TextView)convertView.findViewById(R.id.jadwal_ka_text);
+				holder.posisiKaText = (TextView)convertView.findViewById(R.id.posisi_ka_text);
+				holder.jalurKaText = (TextView)convertView.findViewById(R.id.jalur_ka_text);
 			}
 			convertView.setTag(holder);
-		} else {
+		} else if(currentRow.size() == 1){
+			currentView = mInflater.inflate(R.layout.schedule_row_empty, null);
+			convertView = currentView;
+			holder = new ViewHolder();
+			holder.noSchedule = (TextView)convertView.findViewById(R.id.empty_schedule);
+			holder.noSchedule.setBackgroundColor(Color.BLACK);
+			holder.noSchedule.setTextColor(Color.RED);
+		} else{
 			holder = (ViewHolder)convertView.getTag();
 		}
 
@@ -92,23 +106,31 @@ public class SchedulesListAdapter extends BaseAdapter {
 		TextView posisiKa;
 		TextView jalurKa;
 		TextView noSchedule;
+		TextView noKaText;
+		TextView tujuanKaText;
+		TextView jadwalKaText;
+		TextView posisiKaText;
+		TextView jalurKaText;
+		LinearLayout wrapperLayout;
 	}
 
-	public void refreshList(){
+	public void refreshList(ArrayList<ArrayList<String>> rowArray){
+		this.rowArray = rowArray;
 		notifyDataSetChanged();
 	}
 
 	private void setColorUI(String backgroundColor, String textColor, ViewHolder holder){
-		holder.tujuanKa.setBackgroundColor(Color.parseColor(backgroundColor));
+		holder.wrapperLayout.setBackgroundColor(Color.parseColor(backgroundColor));
 		holder.tujuanKa.setTextColor(Color.parseColor(textColor));
-		holder.noKa.setBackgroundColor(Color.parseColor(backgroundColor));
+		holder.tujuanKaText.setTextColor(Color.parseColor(textColor));
 		holder.noKa.setTextColor(Color.parseColor(textColor));
-		holder.jadwalKa.setBackgroundColor(Color.parseColor(backgroundColor));
+		holder.noKaText.setTextColor(Color.parseColor(textColor));
 		holder.jadwalKa.setTextColor(Color.parseColor(textColor));
-		holder.posisiKa.setBackgroundColor(Color.parseColor(backgroundColor));
+		holder.jadwalKaText.setTextColor(Color.parseColor(textColor));
 		holder.posisiKa.setTextColor(Color.parseColor(textColor));
-		holder.jalurKa.setBackgroundColor(Color.parseColor(backgroundColor));
+		holder.posisiKaText.setTextColor(Color.parseColor(textColor));
 		holder.jalurKa.setTextColor(Color.parseColor(textColor));
+		holder.jalurKaText.setTextColor(Color.parseColor(textColor));
 	}
 
 }

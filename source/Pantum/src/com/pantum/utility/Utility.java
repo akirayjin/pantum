@@ -79,7 +79,6 @@ public class Utility {
 
 	public static ArrayList<String> getFavoriteArray(Context context){
 		String[] stationArray = context.getResources().getStringArray(R.array.station_arrays);
-		//ArrayList<String> stationArray = new ArrayList<String>(R.array.station_arrays);
 		ArrayList<String> favoritedArray = new ArrayList<String>();
 		for (int i = 0; i < stationArray.length; i++) {
 			String currentStation = stationArray[i];

@@ -2,26 +2,20 @@
 <resources>
 
     <string name="app_name">Pantum</string>
-    <string name="menu_credit_text">Kredit</string>
-    <string name="menu_direction_text">Petunjuk Arah</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="no_station_selected">Pilih stasiun dulu</string>
-    <string name="station_prompt">Pilih Stasiun:</string>
-    <string name="no_data">Tabel posisi KRL akan muncul disini.</string>
-    <string name="no_data_map">Posisi Stasiun di peta akan muncul disini.</string>
-    <string name="web_title">Info KRL</string>
+    <string name="title_activity_main">Pantum</string>
+    
     <string name="map_title">Lokasi Stasiun</string>
     <string name="location_button">Petunjuk Arah</string>
     <string name="credit_button">Kredit</string>
     <string name="favorite_text">Stasiun Favorit</string>
-    <string name="no_ka">NO KA</string>
-    <string name="tujuan_ka">TUJUAN</string>
-    <string name="jadwal_ka">JADWAL</string>
-    <string name="posisi_ka">POSISI</string>
-    <string name="jalur_ka">JALUR</string>
+    <string name="no_ka">NO KA:</string>
+    <string name="tujuan_ka">TUJUAN:</string>
+    <string name="jadwal_ka">JADWAL:</string>
+    <string name="posisi_ka">POSISI:</string>
+    <string name="jalur_ka">JALUR:</string>
+    <string name="no_data">Please Select Station in Station List</string>
 
     <string-array name="station_arrays">
-        <item>Pilih stasiun anda</item>
         <item>Ancol</item>
         <item>Angke</item>
         <item>Batu Ceper</item>
@@ -92,7 +86,14 @@
         <item>Universitas Indonesia</item>
         <item>Universitas Pancasila</item>
     </string-array>
-
-    <string name="title_activity_credit">CreditActivity</string>
+    <string-array name="drawer_menu">
+        <item>Favorite List</item>
+        <item>Station List</item>
+        <item>Position</item>
+        <item>Credits</item>
+    </string-array>
+    
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 
 </resources>

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pantum"
-    android:versionCode="6"
-    android:versionName="0.4.1" >
+    android:versionCode="7"
+    android:versionName="0.5" >
 
     <uses-sdk
-        android:minSdkVersion="7"
-        android:targetSdkVersion="15" />
+        android:minSdkVersion="15"
+        android:targetSdkVersion="18" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -19,18 +19,15 @@
         <uses-library android:name="com.google.android.maps" />
 
         <activity
-            android:name="com.pantum.MainActivity"
+            android:name="com.pantum.NavigationDrawer"
             android:configChanges="orientation|keyboard|screenLayout|screenSize"
-            android:label="@string/app_name" >
+            android:label="@string/title_activity_main"
+            android:theme="@android:style/Theme.Holo.Light.DarkActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name="com.pantum.CreditActivity"
-            android:label="@string/title_activity_credit" >
         </activity>
     </application>
 

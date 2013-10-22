@@ -15,7 +15,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.google.android.maps.GeoPoint;
 import com.pantum.R;
@@ -34,7 +33,7 @@ public class PantumDatabase {
 	private void getDatabseFromFile(){
 		String jsonString = getResourceRaw(R.raw.pantum_database).toString();
 		String jsonStringColor = getResourceRaw(R.raw.background_colors).toString();
-		Log.i("Pantum Database", jsonStringColor);
+		//Log.i("Pantum Database", jsonStringColor);
 		
 		try {
 			JSONObject colorJSON = new JSONObject(jsonStringColor);

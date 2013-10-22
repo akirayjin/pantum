@@ -7,12 +7,15 @@ import java.util.Timer;
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.text.Html;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -26,6 +29,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pantum.model.TrainModelData;
 import com.pantum.utility.ConstantVariable;
 import com.pantum.utility.PantumDatabase;
 import com.pantum.utility.Utility;
@@ -41,13 +45,21 @@ public class PositionFragment extends Fragment {
 	private LinearLayout noDataLayout;
 	private String currentStationName = "";
 	private boolean isFavorited = false;
-	private ArrayList<ArrayList<String>> rows;
+	private ArrayList<TrainModelData> rows;
 	private String currentKey = "";
 	final Timer myTimer = new Timer();
 	private boolean isOnPause = false;
 	private ProgressBar progressBar;
 	private SchedulesListAdapter adapter;
 	private View rootView;
+	private CountDownTimer refreshTimer;
+	private boolean isEmpty = false;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setHasOptionsMenu(true);
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -60,6 +72,22 @@ public class PositionFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		int savedRefreshTimeout = Utility.loadIntegerPreferences(ConstantVariable.TRAIN_REFRESH_TIMEOUT_VALUE_KEY, getActivity());
+		if (savedRefreshTimeout < 1){
+			savedRefreshTimeout = ConstantVariable.TEN_THOUSAND_MILLIS;
+		}
+		refreshTimer = new CountDownTimer(savedRefreshTimeout, ConstantVariable.INTERVAL_ONE_THOUSAND_MILLIS) {
+
+			@Override
+			public void onTick(long millisUntilFinished) {
+				//Log.i(this.toString(), ">>>>>>>>>>>>>>>>>>>>>>>> timeout: "+millisUntilFinished/1000);
+			}
+
+			@Override
+			public void onFinish() {
+				startLoadUrl();
+			}
+		};
 		pd = new PantumDatabase(this.getActivity().getApplicationContext());
 		map = pd.getStationsCodeMap();
 		Bundle argument = getArguments();
@@ -67,6 +95,8 @@ public class PositionFragment extends Fragment {
 			String currentStation = argument.getString(ConstantVariable.CURRENT_STATION_KEY);
 			onItemSelected(currentStation);
 			setDataVisibility(true);
+		}else{
+			isEmpty = true;
 		}
 		favoriteButton.setOnClickListener(new OnClickListener() {
 
@@ -78,7 +108,7 @@ public class PositionFragment extends Fragment {
 					Utility.savePreference(currentStationName, false, PositionFragment.this.getActivity());
 					isFavorited = Utility.loadBooleanPreferences(currentStationName, PositionFragment.this.getActivity());
 				}else{
-					if(!currentStationName.equalsIgnoreCase("")){
+					if(!currentStationName.equalsIgnoreCase(ConstantVariable.EMPTY_STRING)){
 						Drawable starImage = getResources().getDrawable(R.drawable.star_orange_50_50);
 						favoriteButton.setImageDrawable(starImage);
 						Utility.savePreference(currentStationName, true, PositionFragment.this.getActivity());
@@ -88,6 +118,7 @@ public class PositionFragment extends Fragment {
 			}
 		});
 	}
+
 
 	private void findLayout(){
 		stationName = (TextView)rootView.findViewById(R.id.text);
@@ -104,49 +135,33 @@ public class PositionFragment extends Fragment {
 		wv = new WebView(this.getActivity().getApplicationContext());
 		wv.addJavascriptInterface(new MyJavaScriptInterface(), "HTMLOUT");
 		wv.setWebViewClient(new WebViewClient(){
-			boolean isfinish = false;
-
-			@Override
-			public void onPageStarted(WebView view, String url, Bitmap favicon) {
-				//Log.i("onpagestarted","start new url");
-				isfinish = false;
-				super.onPageStarted(view, url, favicon);
-			}
 
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
 				return super.shouldOverrideUrlLoading(view, url);
 			}
+
 			@Override
 			public void onReceivedError(WebView view, int errorCode,
 					String description, String failingUrl) {
-				Toast.makeText(PositionFragment.this.getActivity(), "Ada masalah dengan koneksi Internet anda. Cobalah kembali beberapa saat lagi.", Toast.LENGTH_LONG).show();
+				Toast.makeText(PositionFragment.this.getActivity(), getResources().getString(R.string.connection_problem), Toast.LENGTH_LONG).show();
 				super.onReceivedError(view, errorCode, description, failingUrl);
 			}
 
 			@Override
 			public void onPageFinished(WebView view, String url) {
 				view.loadUrl("javascript:window.HTMLOUT.processHTML(document.getElementsByTagName('tbody')[0].innerHTML);");
-				isfinish = true;
 				showProgressBar(false);
+				boolean isAutoRefresh = Utility.loadBooleanPreferences(ConstantVariable.TRAIN_AUTO_REFRESH_KEY, getActivity());
+				if(isAutoRefresh){
+					refreshTimer.cancel();
+					refreshTimer.start();
+				}
 				super.onPageFinished(view, url);
 			}
-
-			@Override
-			public void onLoadResource(WebView view, String url) {
-				if(isfinish && !isOnPause){
-					showProgressBar(true);
-					view.loadUrl("http://infoka.krl.co.id/to/"+currentKey);
-				}
-				super.onLoadResource(view, url);
-			}
-
 		});
 		WebSettings wvSetting = wv.getSettings();
 		wvSetting.setJavaScriptEnabled(true);
-		wvSetting.setLoadWithOverviewMode(true);
-		wvSetting.setUseWideViewPort(true);
-		wvSetting.setBuiltInZoomControls(true);
 	}
 
 	public class MyJavaScriptInterface
@@ -154,26 +169,45 @@ public class PositionFragment extends Fragment {
 		public void processHTML(String html)
 		{
 			//Log.i("Row table", html);
-			String[] tables = html.split("</tr>");
-			rows = new ArrayList<ArrayList<String>>();
+			String[] tables = html.split(ConstantVariable.TABLE_SPLITTER);
+			rows = new ArrayList<TrainModelData>();
 			for (int i = 0; i < tables.length; i++) {
-				String[] coloumn = tables[i].split("</td>");
+				String[] coloumn = tables[i].split(ConstantVariable.COLOUMN_SPLITTER);
 				ArrayList<String> coloumnArray = new ArrayList<String>();
 				for (int j = 0; j < coloumn.length; j++) {
 					String text = Html.fromHtml(coloumn[j]).toString();
 					//Log.i("Row table", text);
-					coloumnArray.add(text);
+					if(!text.equalsIgnoreCase(ConstantVariable.EMPTY_STRING)){
+						coloumnArray.add(text);
+					}
 				}
-				if(tables.length >= 1 && tables[i].contains("cls")){
+				if(tables.length >= 1 && tables[i].contains(ConstantVariable.TRAIN_CLASS_STRING)){
 					String currentTablesText = tables[i];
 					String classTrain = currentTablesText.substring(11, 17);
-					if(classTrain.contains("\"")){
+					if(classTrain.contains(ConstantVariable.QUOTE_STRING)){
 						classTrain = classTrain.substring(0, classTrain.length()-1);
 					}
 					//Log.i("Row table", classTrain);
 					coloumnArray.add(classTrain);
 				}
-				rows.add(coloumnArray);
+				TrainModelData modelData = new TrainModelData();
+				if(coloumnArray.size() > 1){
+					modelData.setTrainNumber(coloumnArray.get(0));
+					modelData.setDestination(coloumnArray.get(1));
+					modelData.setScheduleArrive(coloumnArray.get(2));
+					modelData.setCurrentPosition(coloumnArray.get(3));
+					if(coloumnArray.size() < 6){
+						modelData.setBackgroundColor(coloumnArray.get(4));
+					}else{
+						modelData.setTrainLine(Integer.parseInt(coloumnArray.get(4)));
+						modelData.setBackgroundColor(coloumnArray.get(5));
+					}
+					modelData.setSize(coloumnArray.size());
+				}else{
+					modelData.setNoTrainMessage(coloumnArray.get(0));
+					modelData.setSize(1);
+				}
+				rows.add(modelData);
 			}
 			handler.post(startUpdateList);
 		}
@@ -218,7 +252,7 @@ public class PositionFragment extends Fragment {
 				}
 			}
 		}else{
-			Toast.makeText(PositionFragment.this.getActivity(), "Anda tidak terhubung dengan Internet. Aktifkan Internet anda dan coba kembali", Toast.LENGTH_LONG).show();
+			Toast.makeText(PositionFragment.this.getActivity(), getResources().getString(R.string.train_no_internet_connection), Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -238,13 +272,19 @@ public class PositionFragment extends Fragment {
 	}
 
 	private void startLoadUrl(){
-		showProgressBar(true);
-		wv.loadUrl("http://infoka.krl.co.id/to/"+currentKey);
+		if(Utility.isNetworkAvailable(getActivity())){
+			showProgressBar(true);
+			String url = String.format(ConstantVariable.TRAIN_URL_FORMAT, currentKey);
+			wv.loadUrl(url);
+		}else{
+			Toast.makeText(PositionFragment.this.getActivity(), getResources().getString(R.string.train_no_internet_connection), Toast.LENGTH_LONG).show();
+		}
 	}
 
 	@Override
 	public void onPause() {
 		isOnPause = true;
+		refreshTimer.cancel();
 		super.onPause();
 	}
 
@@ -263,5 +303,27 @@ public class PositionFragment extends Fragment {
 		}else{
 			progressBar.setVisibility(View.INVISIBLE);
 		}
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		super.onCreateOptionsMenu(menu, inflater);
+		menu.clear();
+		if(!isEmpty){
+			inflater.inflate(R.menu.train_position_fragment_menu, menu);
+		}
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_refresh:
+			refreshTimer.cancel();
+			startLoadUrl();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+
 	}
 }

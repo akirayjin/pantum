@@ -1,5 +1,7 @@
 package com.pantum;
 
+import java.util.ArrayList;
+
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.pantum.utility.ConstantVariable;
@@ -16,11 +19,13 @@ import com.pantum.utility.Utility;
 public class FavoriteFragment extends Fragment {
 
 	View rootView;
+	LinearLayout noDataLayout;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.favorite_layout, container, false);
+		noDataLayout = (LinearLayout)rootView.findViewById(R.id.train_no_favorite_layout);
 		return rootView;
 	}
 	
@@ -28,8 +33,9 @@ public class FavoriteFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		ListView list = (ListView)rootView.findViewById(R.id.favorite_listview);
+		ArrayList<String> favoriteArray = Utility.getFavoriteArray(getActivity());
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), 
-		        android.R.layout.simple_list_item_1, Utility.getFavoriteArray(getActivity()));
+		        android.R.layout.simple_list_item_1, favoriteArray);
 		list.setOnItemClickListener(new  OnItemClickListener() {
 
 			@Override
@@ -43,6 +49,9 @@ public class FavoriteFragment extends Fragment {
 			}
 		});
 		list.setAdapter(adapter);
+		if(favoriteArray.size() > 0){
+			noDataLayout.setVisibility(View.GONE);
+			list.setVisibility(View.VISIBLE);
+		}
 	}
-
 }

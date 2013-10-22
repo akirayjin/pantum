@@ -11,15 +11,16 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.pantum.model.TrainModelData;
 import com.pantum.utility.PantumDatabase;
 
 public class SchedulesListAdapter extends BaseAdapter {
-	public ArrayList<ArrayList<String>> rowArray;
+	public ArrayList<TrainModelData> rowArray;
 	public Context context;
 	private LayoutInflater mInflater;
 	private PantumDatabase pd;
 
-	public SchedulesListAdapter(Context context, ArrayList<ArrayList<String>> rowArray, PantumDatabase pd){
+	public SchedulesListAdapter(Context context, ArrayList<TrainModelData> rowArray, PantumDatabase pd){
 		this.rowArray = rowArray;
 		this.mInflater = LayoutInflater.from(context);
 		this.pd = pd;
@@ -42,10 +43,10 @@ public class SchedulesListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ArrayList<String> currentRow = rowArray.get(position);
+		TrainModelData currentRow = rowArray.get(position);
 		View currentView = null;
 
-		if(currentRow.size() == 1){
+		if(currentRow.getSize() == 1){
 			currentView = mInflater.inflate(R.layout.schedule_row_empty, null);
 		}else{
 			currentView = mInflater.inflate(R.layout.schedule_rows, null);
@@ -55,7 +56,7 @@ public class SchedulesListAdapter extends BaseAdapter {
 		if (convertView == null && currentRow != null) {
 			holder = new ViewHolder();
 			convertView = currentView;
-			if(currentRow.size() == 1){
+			if(currentRow.getSize() == 1){
 				holder.noSchedule = (TextView)convertView.findViewById(R.id.empty_schedule);
 				holder.noSchedule.setBackgroundColor(Color.BLACK);
 				holder.noSchedule.setTextColor(Color.RED);
@@ -73,7 +74,7 @@ public class SchedulesListAdapter extends BaseAdapter {
 				holder.jalurKaText = (TextView)convertView.findViewById(R.id.jalur_ka_text);
 			}
 			convertView.setTag(holder);
-		} else if(currentRow.size() == 1){
+		} else if(currentRow.getSize() == 1){
 			currentView = mInflater.inflate(R.layout.schedule_row_empty, null);
 			convertView = currentView;
 			holder = new ViewHolder();
@@ -84,16 +85,23 @@ public class SchedulesListAdapter extends BaseAdapter {
 			holder = (ViewHolder)convertView.getTag();
 		}
 
-		if(currentRow.size() == 1){
-			holder.noSchedule.setText(currentRow.get(0));
+		if(currentRow.getSize() == 1){
+			holder.noSchedule.setText(currentRow.getNoTrainMessage());
 		}else{
-			holder.noKa.setText(currentRow.get(0));
-			holder.tujuanKa.setText(currentRow.get(1));
-			holder.jadwalKa.setText(currentRow.get(2));
-			holder.posisiKa.setText(currentRow.get(3));
-			holder.jalurKa.setText(currentRow.get(4));
-			String backgroundColor = pd.getClassBackgroundColor(currentRow.get(5));
-			String textColor = pd.getClassTextColor(currentRow.get(5));
+			String backgroundColor;
+			String textColor;
+			holder.noKa.setText(currentRow.getTrainNumber());
+			holder.tujuanKa.setText(currentRow.getDestination());
+			holder.jadwalKa.setText(currentRow.getScheduleArrive());
+			holder.posisiKa.setText(currentRow.getCurrentPosition());
+			if(currentRow.getSize() < 6){
+				backgroundColor = pd.getClassBackgroundColor(currentRow.getBackgroundColor());
+				textColor = pd.getClassTextColor(currentRow.getBackgroundColor());
+			}else{
+				holder.jalurKa.setText(String.valueOf(currentRow.getTrainLine()));
+				backgroundColor = pd.getClassBackgroundColor(currentRow.getBackgroundColor());
+				textColor = pd.getClassTextColor(currentRow.getBackgroundColor());
+			}
 			setColorUI(backgroundColor, textColor, holder);
 		}
 		return convertView;
@@ -114,7 +122,7 @@ public class SchedulesListAdapter extends BaseAdapter {
 		LinearLayout wrapperLayout;
 	}
 
-	public void refreshList(ArrayList<ArrayList<String>> rowArray){
+	public void refreshList(ArrayList<TrainModelData> rowArray){
 		this.rowArray = rowArray;
 		notifyDataSetChanged();
 	}

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.pantum"
-    android:versionCode="7"
-    android:versionName="0.5" >
+    android:versionCode="8"
+    android:versionName="0.5.1" >
 
     <uses-sdk
-        android:minSdkVersion="15"
-        android:targetSdkVersion="18" />
+        android:minSdkVersion="14"
+        android:targetSdkVersion="15" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -14,8 +14,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/pantum_logo_icon"
-        android:label="@string/app_name"
-        android:theme="@android:style/Theme.Light.NoTitleBar" >
+        android:label="@string/app_name" >
         <uses-library android:name="com.google.android.maps" />
 
         <activity

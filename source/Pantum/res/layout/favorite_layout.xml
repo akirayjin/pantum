@@ -11,6 +11,20 @@
     <ListView
         android:id="@+id/favorite_listview"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="fill_parent"
+        android:visibility="gone" />
+    
+    <LinearLayout
+        android:id="@+id/train_no_favorite_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:text="@string/train_no_favorite" />
+    </LinearLayout>
 
 </RelativeLayout>

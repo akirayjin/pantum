@@ -116,6 +116,9 @@ public class NavigationDrawer extends Activity {
 		case ConstantVariable.CREDIT_FRAGMENT:
 			fragment = new CreditFragment();
 			break;
+		case ConstantVariable.TRAIN_SETTING_FRAGMENT:
+			fragment = new TrainSettingFragment();
+			break;
 		}
 		if(args != null){
 			fragment.setArguments(args);
@@ -139,43 +142,20 @@ public class NavigationDrawer extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		//MenuInflater inflater = getMenuInflater();
-		//inflater.inflate(R.menu.main, menu);
 		return super.onCreateOptionsMenu(menu);
 	}
-
-	/* Called whenever we call invalidateOptionsMenu() */
+	
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		// If the nav drawer is open, hide action items related to the content view
-		//boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-		//menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// The action bar home/up action should open or close the drawer.
-		// ActionBarDrawerToggle will take care of this.
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}
-		// Handle action buttons
-		/*switch(item.getItemId()) {
-		case R.id.action_websearch:
-			// create intent to perform web search for this planet
-			Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
-			intent.putExtra(SearchManager.QUERY, getActionBar().getTitle());
-			// catch event that there's no activity to handle intent
-			if (intent.resolveActivity(getPackageManager()) != null) {
-				startActivity(intent);
-			} else {
-				Toast.makeText(this, "app not available", Toast.LENGTH_LONG).show();
-			}
-			return true;
-		default:*/
 		return super.onOptionsItemSelected(item);
-		//}
 	}
 
 	@Override

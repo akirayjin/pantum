@@ -3,17 +3,19 @@
 
     <string name="app_name">Pantum</string>
     <string name="title_activity_main">Pantum</string>
-    
-    <string name="map_title">Lokasi Stasiun</string>
-    <string name="location_button">Petunjuk Arah</string>
-    <string name="credit_button">Kredit</string>
-    <string name="favorite_text">Stasiun Favorit</string>
+    <string name="favorite_text">Favorite Stations</string>
     <string name="no_ka">NO KA:</string>
     <string name="tujuan_ka">TUJUAN:</string>
     <string name="jadwal_ka">JADWAL:</string>
     <string name="posisi_ka">POSISI:</string>
     <string name="jalur_ka">JALUR:</string>
     <string name="no_data">Please Select Station in Station List</string>
+    <string name="connection_problem">Opps! There a problem with your Internet Connection. Please try again later.</string>
+    <string name="credit_title">Credits</string>
+    <string name="train_setting_refresh_interval">Refresh Interval</string>
+    <string name="train_setting_auto_refresh">Auto Refresh</string>
+    <string name="train_no_favorite">There\'s no favorite yet. Please select station and press favorite button (star shape).</string>
+    <string name="train_no_internet_connection">There is not active Internet connection available. Please active it and try again.</string>
 
     <string-array name="station_arrays">
         <item>Ancol</item>
@@ -91,9 +93,20 @@
         <item>Station List</item>
         <item>Position</item>
         <item>Credits</item>
+        <item>Settings</item>
+    </string-array>
+    
+    <string-array name="refresh_interval">
+        <item>10 Seconds</item>
+        <item>30 Seconds</item>
+        <item>1 Minute</item>
+        <item>5 Minutes</item>
+        <item>10 Minutes</item>
+        <item>30 Minutes</item>
     </string-array>
     
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="action_refresh">Refresh Train Position</string>
 
 </resources>

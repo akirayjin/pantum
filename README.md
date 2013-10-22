@@ -1,16 +1,27 @@
 pantum
 ======
 
-Pantauan Transportasi Umum secara real-time
-version 0.4.1
+Pantauan Transportasi Umum
+Current Version 0.5.1
 
 Feature:
-- untuk saat ini hanya pantauan posisi kereta
-- pilih stasiun yang anda inginkan dan muncullah data posisi kereta.
-- posisi stasiun dipeta.
-- favorit stasiun dan pilih dari daftar favorit
+- For now only Train position in realtime
+- Auto refresh and refresh interval
+- Slide from left to right to open menu
+- Refresh anytime with refresh button
 
 changelog:
+version 0.5.1
+- fix bug favourite empty when no favourite available
+- add setting menu
+- auto refresh and refresh interval
+- refresh button in position page
+
+version 0.5
+- New menu using navigation drawer
+- Station list and Favourite list in seperate page
+- Better Position list
+
 version 0.4.1
 - fix bug for some station not showing
 - fix crash when only 1 train in one station (because not able to get cls for background and text color)

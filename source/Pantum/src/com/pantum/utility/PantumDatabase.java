@@ -8,6 +8,7 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.json.JSONArray;
@@ -18,11 +19,14 @@ import android.content.Context;
 
 import com.google.android.maps.GeoPoint;
 import com.pantum.R;
+import com.pantum.model.CCTVPlaceModelData;
+import com.pantum.model.CCTVRegionModelData;
 
 public class PantumDatabase {
 	private Context context;
 	private JSONObject pantumJSON;
 	private JSONArray stationsArray;
+	private JSONObject cctvObject;
 	private JSONArray colorArray;
 
 	public PantumDatabase(Context context){
@@ -34,17 +38,19 @@ public class PantumDatabase {
 		String jsonString = getResourceRaw(R.raw.pantum_database).toString();
 		String jsonStringColor = getResourceRaw(R.raw.background_colors).toString();
 		//Log.i("Pantum Database", jsonStringColor);
-		
+
 		try {
 			JSONObject colorJSON = new JSONObject(jsonStringColor);
 			pantumJSON = new JSONObject(jsonString);
 			stationsArray = pantumJSON.getJSONArray("stations");
+			cctvObject = pantumJSON.getJSONObject("cctv");
 			colorArray = colorJSON.getJSONArray("colors");
+
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private Writer getResourceRaw(int resourceFile){
 		InputStream is = context.getResources().openRawResource(resourceFile);
 		Writer writer = new StringWriter();
@@ -85,7 +91,7 @@ public class PantumDatabase {
 
 		return response;
 	}
-	
+
 	public String getClassBackgroundColor(String className){
 		String response = null;
 		try {
@@ -101,7 +107,7 @@ public class PantumDatabase {
 
 		return response;
 	}
-	
+
 	public String getClassTextColor(String className){
 		String response = null;
 		try {
@@ -117,7 +123,7 @@ public class PantumDatabase {
 
 		return response;
 	}
-	
+
 	public HashMap<String, String> getStationsCodeMap(){
 		HashMap<String, String> response = new HashMap<String, String>();
 		try {
@@ -131,7 +137,7 @@ public class PantumDatabase {
 		}
 		return response;
 	}
-	
+
 	public GeoPoint getStationGeoPoint(String stationName){
 		GeoPoint response = null;
 		try {
@@ -149,7 +155,7 @@ public class PantumDatabase {
 
 		return response;
 	}
-	
+
 	public String getLatitude(String stationName){
 		String response = null;
 		try {
@@ -165,7 +171,7 @@ public class PantumDatabase {
 
 		return response;
 	}
-	
+
 	public String getLongitude(String stationName){
 		String response = null;
 		try {
@@ -180,6 +186,44 @@ public class PantumDatabase {
 		}
 
 		return response;
+	}
+
+	public ArrayList<CCTVRegionModelData> getCCTVRegionArray(){
+		ArrayList<CCTVRegionModelData> responseArray = new ArrayList<CCTVRegionModelData>();
+		try {
+			if(cctvObject.has("region")){
+				JSONArray regionArray = cctvObject.getJSONArray("region");
+				for(int i = 0; i < regionArray.length(); i ++){
+					JSONObject currentRegion = regionArray.getJSONObject(i);
+					CCTVRegionModelData regionModel = new CCTVRegionModelData();
+					regionModel.setRegionName(currentRegion.getString("name"));
+					regionModel.setPlacesArray(getCCTVPlaceArray(currentRegion));
+					responseArray.add(regionModel);
+				}
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return responseArray;
+	}
+
+	private ArrayList<CCTVPlaceModelData> getCCTVPlaceArray(JSONObject regionObject){
+		ArrayList<CCTVPlaceModelData> responseArray = new ArrayList<CCTVPlaceModelData>();
+		try {
+			if(regionObject.has("place")){
+				JSONArray placeArray = regionObject.getJSONArray("place");
+				for(int i = 0; i < placeArray.length(); i++){
+					JSONObject currentPlace = placeArray.getJSONObject(i);
+					CCTVPlaceModelData placeModel = new CCTVPlaceModelData();
+					placeModel.setPlaceName(currentPlace.getString("name"));
+					placeModel.setCamId(currentPlace.getInt("camId"));
+					responseArray.add(placeModel);
+				}
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return responseArray;
 	}
 
 }

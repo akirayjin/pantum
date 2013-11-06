@@ -30,7 +30,6 @@
                 android:layout_height="fill_parent"
                 android:gravity="center"
                 android:paddingRight="20dip"
-                android:text="@string/favorite_text"
                 android:textColor="@android:color/black"
                 android:textSize="18sp" />
 

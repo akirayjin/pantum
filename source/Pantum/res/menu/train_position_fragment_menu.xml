@@ -6,5 +6,11 @@
         android:icon="@drawable/ic_action_refresh"
         android:title="@string/action_refresh"
         android:visible="true"
-        android:showAsAction="ifRoom"/>
+        android:showAsAction="always"/>
+    <item 
+        android:id="@+id/action_map"
+        android:icon="@drawable/ic_action_map"
+        android:title="@string/action_map"
+        android:visible="true"
+        android:showAsAction="always"/>
 </menu>

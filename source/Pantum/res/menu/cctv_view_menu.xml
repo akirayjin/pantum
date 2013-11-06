@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/action_video"
+        android:icon="@drawable/ic_action_video"
+        android:title="@string/action_video"
+        android:visible="true"
+        android:showAsAction="always"/>
+    <item 
+        android:id="@+id/action_picture"
+        android:icon="@drawable/ic_action_picture"
+        android:title="@string/action_picture"
+        android:visible="false"
+        android:showAsAction="always"/>
+
+</menu>

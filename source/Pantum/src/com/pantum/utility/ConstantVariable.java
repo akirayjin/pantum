@@ -19,4 +19,11 @@ public class ConstantVariable {
 	public static final String TRAIN_REFRESH_TIMEOUT_KEY= "trainRefreshTimeoutKey";
 	public static final String TRAIN_AUTO_REFRESH_KEY = "trainAutoRefreshKey";
 	public static final String TRAIN_REFRESH_TIMEOUT_VALUE_KEY = "trainRefreshTimeoutValueKey";
+	public static final String TRAIN_INTENT_EXTRA_MAP = "trainIntentExtraMap";
+	public static final String TRAIN_INTENT_EXTRA_STATION_NAME = "trainIntentExtraStationName";
+	public static final int TRAIN_INDEX_LATITUDE = 0;
+	public static final int TRAIN_INDEX_LONGITUDE = 1;
+	public static final int TRAIN_MAP_ZOOM = 16;
+	public static final String CCTV_IMAGE_URL_BASE = "http://lewatmana.com/camimgurl/";
+	public static final String CCTV_VIDEO_URL_BASE = "http://lewatmana.com/camvidurl/";
 }

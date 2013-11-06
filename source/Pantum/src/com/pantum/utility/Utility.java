@@ -8,8 +8,11 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 import com.pantum.R;
+import com.pantum.model.CCTVPlaceModelData;
 
 public class Utility {
+	
+	private static CCTVPlaceModelData tempPlaceData;
 
 	public static boolean isNetworkAvailable(Context context) {
 		ConnectivityManager connectivityManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -88,5 +91,13 @@ public class Utility {
 			}
 		}
 		return favoritedArray;
+	}
+	
+	public static void setTempPlaceData(CCTVPlaceModelData data){
+		tempPlaceData = data;
+	}
+	
+	public static CCTVPlaceModelData getTempPlaceData(){
+		return tempPlaceData;
 	}
 }

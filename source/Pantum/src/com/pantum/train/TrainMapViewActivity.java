@@ -14,7 +14,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.pantum.R;
 import com.pantum.utility.ConstantVariable;
 
-public class TrainMapViewFragment extends Activity{
+public class TrainMapViewActivity extends Activity{
 
 	private String stationName;
 	private LatLng coordinate;

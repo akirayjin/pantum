@@ -1,12 +1,12 @@
 package com.pantum.train;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -18,9 +18,8 @@ import android.widget.ListView;
 
 import com.pantum.R;
 import com.pantum.utility.ConstantVariable;
-import com.pantum.utility.Utility;
 
-public class TrainNavigationDrawer extends Activity {
+public class TrainNavigationDrawer extends FragmentActivity {
 
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
@@ -42,7 +41,7 @@ public class TrainNavigationDrawer extends Activity {
 		mDrawerListMenu = getResources().getStringArray(R.array.drawer_menu);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
-		fragmentManager = getFragmentManager();
+		fragmentManager = getSupportFragmentManager();
 		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawerListMenu));
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
@@ -70,12 +69,7 @@ public class TrainNavigationDrawer extends Activity {
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
 		if (savedInstanceState == null) {
-			if(Utility.getFavoriteArray(getApplicationContext()).size() > 0){
-				selectItem(ConstantVariable.FAVORITE_LIST_FRAGMENT, null);
-			}else{
-				selectItem(ConstantVariable.STATION_LIST_FRAGMENT, null);
-			}
-
+			selectItem(ConstantVariable.STATION_LIST_FRAGMENT, null);
 		}
 	}
 
@@ -99,41 +93,36 @@ public class TrainNavigationDrawer extends Activity {
 	public void selectItem(int position,  Bundle args) {
 		Fragment fragment = null;
 		switch(position){
-		case ConstantVariable.FAVORITE_LIST_FRAGMENT:
-			fragment = new TrainFavoriteFragment();
-			currentFragment = ConstantVariable.FAVORITE_LIST_FRAGMENT;
+		case ConstantVariable.HOME_PAGE:
+			finish();
 			break;
 		case ConstantVariable.STATION_LIST_FRAGMENT:
-			fragment = new TrainStationListFragment();
+			fragment = new TrainStationsFragment();
 			currentFragment = ConstantVariable.STATION_LIST_FRAGMENT;
 			break;
 		case ConstantVariable.POSITION_FRAGMENT:
 			fragment = new TrainPositionFragment();
 			currentFragment = ConstantVariable.POSITION_FRAGMENT;
 			break;
-		case ConstantVariable.CREDIT_FRAGMENT:
-			fragment = new TrainCreditFragment();
-			currentFragment = ConstantVariable.CREDIT_FRAGMENT;
-			break;
-		case ConstantVariable.TRAIN_SETTING_FRAGMENT:
-			fragment = new TrainSettingFragment();
-			currentFragment = ConstantVariable.TRAIN_SETTING_FRAGMENT;
-			break;
 		}
-		if(args != null){
-			fragment.setArguments(args);
-		}
-		if(currentFragment == oldFragment){
-			mDrawerLayout.closeDrawer(mDrawerList);
-		}else{
-			oldFragment = currentFragment;
-			FragmentTransaction transaction = fragmentManager.beginTransaction();
-			transaction.replace(R.id.content_frame, fragment);
-			transaction.commit();
 
-			mDrawerList.setItemChecked(position, true);
-			setTitle(mDrawerListMenu[position]);
-			mDrawerLayout.closeDrawer(mDrawerList);
+		if(position != ConstantVariable.HOME_PAGE){
+			if(args != null){
+				fragment.setArguments(args);
+			}
+
+			if(currentFragment == oldFragment){
+				mDrawerLayout.closeDrawer(mDrawerList);
+			}else{
+				oldFragment = currentFragment;
+				FragmentTransaction transaction = fragmentManager.beginTransaction();
+				transaction.replace(R.id.content_frame, fragment);
+				transaction.commit();
+
+				mDrawerList.setItemChecked(position, true);
+				setTitle(mDrawerListMenu[position]);
+				mDrawerLayout.closeDrawer(mDrawerList);
+			}
 		}
 	}
 
@@ -153,6 +142,7 @@ public class TrainNavigationDrawer extends Activity {
 		return super.onPrepareOptionsMenu(menu);
 	}
 
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
@@ -166,7 +156,7 @@ public class TrainNavigationDrawer extends Activity {
 		mTitle = title;
 		getActionBar().setTitle(mTitle);
 	}
-	
+
 	public boolean isDrawerOpen(){
 		return mDrawerLayout.isDrawerOpen(mDrawerList);
 	}

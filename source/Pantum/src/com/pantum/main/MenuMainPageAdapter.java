@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.pantum.R;
 
@@ -36,20 +37,25 @@ public class MenuMainPageAdapter extends BaseAdapter {
 			holder = new ViewHolder();
 			convertView = mInflater.inflate(R.layout.mainpage_menu_list, null);
 			holder.itemImage = (ImageView)convertView.findViewById(R.id.mainpage_image);
+			holder.itemTitle = (TextView)convertView.findViewById(R.id.mainpage_title);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder)convertView.getTag();
 		}
 		holder.itemImage.setImageResource(mThumbIds[position]);
+		holder.itemTitle.setText(mTitle[position]);
 		return convertView;
 	}
 
 	private Integer[] mThumbIds = {
-			R.drawable.krl_jabotabek_logo, R.drawable.cctv_logo
+			R.drawable.krl_jabotabek_logo, R.drawable.cctv_logo, R.drawable.ic_setting
 	};
+	
+	private String[] mTitle = {"Train Position","View CCTV","Setting"};
 	
 	static class ViewHolder {
 		ImageView itemImage;
+		TextView itemTitle;
 	}
 
 }

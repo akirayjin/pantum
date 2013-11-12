@@ -10,4 +10,13 @@
         android:layout_height="100dip"
         android:scaleType="fitCenter" />
 
+    <TextView
+        android:id="@+id/mainpage_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="5dp"
+        android:gravity="center_horizontal"
+        android:textSize="18sp" />
+
 </LinearLayout>

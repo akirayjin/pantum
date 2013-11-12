@@ -4,18 +4,20 @@
     <string name="app_name">Pantum</string>
     <string name="title_activity_main">Train Position</string>
     <string name="favorite_text">Favorite Stations</string>
-    <string name="no_ka">KA NUMBER:</string>
-    <string name="tujuan_ka">DESTINATION:</string>
-    <string name="jadwal_ka">SCHEDULE:</string>
-    <string name="posisi_ka">POSITION:</string>
-    <string name="jalur_ka">LINE:</string>
+    <string name="train_no">TRAIN NO:</string>
+    <string name="train_destination">DESTINATION:</string>
+    <string name="train_schedule">SCHEDULE:</string>
+    <string name="train_position">POSITION:</string>
+    <string name="train_line">LINE:</string>
     <string name="no_data">Please Select Station in Station List</string>
     <string name="connection_problem">Opps! There a problem with your Internet Connection. Please try again later.</string>
     <string name="credit_title">Credits</string>
     <string name="train_setting_refresh_interval">Refresh Interval</string>
     <string name="train_setting_auto_refresh">Auto Refresh</string>
     <string name="train_no_favorite">There\'s no favorite yet. Please select station and press favorite button (star shape).</string>
-    <string name="train_no_internet_connection">There is not active Internet connection available. Please active it and try again.</string>
+    <string name="train_no_internet_connection">There is not active Internet connection available. Please enable it and try again.</string>
+    <string name="train_position_depart">DEP</string>
+    <string name="train_position_at">AT</string>
 
     <string-array name="station_arrays">
         <item>Ancol</item>
@@ -89,11 +91,9 @@
         <item>Universitas Pancasila</item>
     </string-array>
     <string-array name="drawer_menu">
-        <item>Favorite List</item>
+        <item>Home Page</item>
         <item>Station List</item>
         <item>Position</item>
-        <item>Credits</item>
-        <item>Settings</item>
     </string-array>
     <string-array name="refresh_interval">
         <item>10 Seconds</item>
@@ -106,8 +106,9 @@
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
-    <string name="action_refresh">Refresh Train Position</string>
-    <string name="action_map">Show Station\'s location in Map</string>
+    <string name="action_refresh">Refresh Position</string>
+    <string name="action_map">Show location in Map</string>
+    <string name="action_favorite">Add to Favorite</string>
     <string name="title_map_activity">Map</string>
     <string name="train_station_string_format">%s Station</string>
     <string name="train_setting_auto_refresh_enabled">ON - You have turn on Auto Refresh</string>
@@ -118,7 +119,9 @@
     <string name="title_activity_main_page">Pantum</string>
     <string name="title_activity_cctvmain_page">CCTV</string>
     <string name="title_activity_cctvview">View CCTV</string>
-    <string name="action_video">Show Video CCTV</string>
-    <string name="action_picture">Show Picture CCTV</string>
+    <string name="action_video">Show as Video</string>
+    <string name="action_picture">Show as Picture</string>
+    <string name="title_activity_setting">Settings</string>
+    <string name="dummy_section_text">Section %1d is just a dummy section.</string>
 
 </resources>

@@ -2,15 +2,29 @@ pantum
 ======
 
 Pantauan Transportasi Umum
-Current Version 0.5.1
+Current Version 0.6.1
 
 Feature:
-- For now only Train position in realtime
+- For now only Train position in realtime & CCTV
 - Auto refresh and refresh interval
-- Slide from left to right to open menu
+- Slide from left to right to open menu (Navigation Drawer)
+- User Friendly when going to Favourite to all station list
+- Add station to favorite list.
 - Refresh anytime with refresh button
 
 changelog:
+version 0.6.1
+- change ui in train using tab
+- move setting to main menu
+- add title in main menu grid
+- add route and nearby tab. but not available yet.
+- prevent cache size to bigger. (impossible now to remove cache at all)
+- keep last station in position. so no need to station list again for the same station.
+
+version 0.6
+- add CCTV menu
+- some change in train position
+
 version 0.5.1
 - fix bug favourite empty when no favourite available
 - add setting menu

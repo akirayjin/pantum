@@ -7,10 +7,16 @@
         android:title="@string/action_refresh"
         android:visible="true"
         android:showAsAction="always"/>
+    <item
+        android:id="@+id/action_favorite"
+        android:icon="@drawable/ic_action_not_important"
+        android:title="@string/action_favorite"
+        android:visible="true"
+        android:showAsAction="ifRoom"/>
     <item 
         android:id="@+id/action_map"
         android:icon="@drawable/ic_action_map"
         android:title="@string/action_map"
         android:visible="true"
-        android:showAsAction="always"/>
+        android:showAsAction="ifRoom"/>
 </menu>

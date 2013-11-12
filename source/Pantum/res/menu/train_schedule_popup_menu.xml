@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:id="@+id/action_schedule_map_view"
+        android:title="Map View"/>
+    <item
+        android:id="@+id/action_schedule_report"
+        android:title="Report"/>
+    <item 
+        android:id="@+id/action_schedule_share"
+        android:title="Share It"/>
+</menu>

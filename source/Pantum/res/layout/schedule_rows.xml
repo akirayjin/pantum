@@ -3,119 +3,148 @@
     android:id="@+id/schedule_row_layout"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="5dip"
-    android:layout_marginRight="5dip"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
     android:orientation="horizontal"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin" >
 
     <LinearLayout
-        android:layout_width="70dip"
-        android:layout_height="50dip" >
+        android:layout_width="70dp"
+        android:layout_height="fill_parent"
+        android:layout_marginRight="5dp" >
 
         <TextView
-            android:layout_width="70dip"
-            android:layout_height="50dip"
+            android:id="@+id/train_schedule_position_atdep"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
             android:gravity="center"
-            android:text="DEP"
-            android:textSize="30sp" >
+            android:textColor="@android:color/black"
+            android:textSize="30sp"
+            android:textStyle="bold" >
         </TextView>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/no_ka_text"
-            android:layout_width="100dip"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/no_ka"
-            android:textColor="@android:color/black" />
+            android:orientation="horizontal" >
 
-        <TextView
-            android:id="@+id/no_ka"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="9" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/train_schedule_position"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:textColor="@android:color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/train_schedule_time_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="2dp"
+                        android:text="@string/train_schedule"
+                        android:textColor="@android:color/black"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/train_schedule_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/train_schedule_line_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="2dp"
+                        android:text="@string/train_line"
+                        android:textColor="@android:color/black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/train_schedule_line"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@android:color/black"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/train_schedule_no_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/train_no"
+                        android:textColor="@android:color/black"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/train_schedule_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dip"
+                        android:textColor="@android:color/black"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/train_schedule_option"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_action_overflow" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/train_schedule_destination_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="3dip"
-            android:textColor="@android:color/black" />
-    </LinearLayout>
+            android:layout_gravity="right"
+            android:orientation="horizontal" >
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/tujuan_ka_text"
-            android:layout_width="100dip"
-            android:layout_height="wrap_content"
-            android:text="@string/tujuan_ka"
-            android:textColor="@android:color/black" />
-
-        <TextView
-            android:id="@+id/tujuan_ka"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/jadwal_ka_text"
-            android:layout_width="100dip"
-            android:layout_height="wrap_content"
-            android:text="@string/jadwal_ka"
-            android:textColor="@android:color/black" />
-
-        <TextView
-            android:id="@+id/jadwal_ka"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/posisi_ka_text"
-            android:layout_width="100dip"
-            android:layout_height="wrap_content"
-            android:text="@string/posisi_ka"
-            android:textColor="@android:color/black" />
-
-        <TextView
-            android:id="@+id/posisi_ka"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:id="@+id/jalur_ka_text"
-            android:layout_width="100dip"
-            android:layout_height="wrap_content"
-            android:text="@string/jalur_ka"
-            android:textColor="@android:color/black" />
-
-        <TextView
-            android:id="@+id/jalur_ka"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black" />
+            <TextView
+                android:id="@+id/train_schedule_destination"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

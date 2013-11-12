@@ -1,15 +1,28 @@
 package com.pantum.model;
 
+import android.content.Context;
+
+import com.pantum.R;
+import com.pantum.utility.ConstantVariable;
+
 public class TrainModelData {
+	public Context mContext;
 	public String trainNumber;
 	public String destination;
 	public String scheduleArrive;
 	public String currentPosition;
+	public String positionStatus;
 	public int trainLine;
 	public String backgroundColor;
 	public String noTrainMessage;
 	public int size;
 	
+	public Context getmContext() {
+		return mContext;
+	}
+	public void setmContext(Context mContext) {
+		this.mContext = mContext;
+	}
 	public String getTrainNumber() {
 		return trainNumber;
 	}
@@ -20,7 +33,8 @@ public class TrainModelData {
 		return destination;
 	}
 	public void setDestination(String destination) {
-		this.destination = destination;
+		String[] destinationArray = destination.split(ConstantVariable.DASH_SPLITTER);
+		this.destination = destinationArray[1];
 	}
 	public String getScheduleArrive() {
 		return scheduleArrive;
@@ -32,7 +46,20 @@ public class TrainModelData {
 		return currentPosition;
 	}
 	public void setCurrentPosition(String currentPosition) {
-		this.currentPosition = currentPosition;
+		String[] positionArray = currentPosition.split(ConstantVariable.SPACE_SPLITTER);
+		this.currentPosition = positionArray[1];
+		setPositionStatus(positionArray[0]);
+	}
+	public String getPositionStatus() {
+		return positionStatus;
+	}
+	public void setPositionStatus(String positionStatus) {
+		if(positionStatus.equalsIgnoreCase("di")){
+			positionStatus = mContext.getResources().getString(R.string.train_position_at);
+		}else{
+			positionStatus = mContext.getResources().getString(R.string.train_position_depart);
+		}
+		this.positionStatus = positionStatus;
 	}
 	public int getTrainLine() {
 		return trainLine;

@@ -2,6 +2,7 @@ package com.pantum.utility;
 
 public class ConstantVariable {
 	public static final int FAVORITE_LIST_FRAGMENT = 0;
+	public static final int HOME_PAGE = 0;
 	public static final int STATION_LIST_FRAGMENT = 1;
 	public static final int POSITION_FRAGMENT = 2;
 	public static final int CREDIT_FRAGMENT = 3;
@@ -16,6 +17,7 @@ public class ConstantVariable {
 	public static final String TRAIN_CLASS_STRING = "cls";
 	public static final String QUOTE_STRING = "\"";
 	public static final String SPACE_SPLITTER = " ";
+	public static final String DASH_SPLITTER = "-";
 	public static final String TRAIN_REFRESH_TIMEOUT_KEY= "trainRefreshTimeoutKey";
 	public static final String TRAIN_AUTO_REFRESH_KEY = "trainAutoRefreshKey";
 	public static final String TRAIN_REFRESH_TIMEOUT_VALUE_KEY = "trainRefreshTimeoutValueKey";

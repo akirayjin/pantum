@@ -1,7 +1,7 @@
 package com.pantum.train;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,10 +13,10 @@ import android.widget.ListView;
 import com.pantum.R;
 import com.pantum.utility.ConstantVariable;
 
-public class TrainStationListFragment extends Fragment {
+public class TrainAllStationsFragment extends Fragment {
 	
 	private View rootView;
-	public TrainStationListFragment(){}
+	public TrainAllStationsFragment(){}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,

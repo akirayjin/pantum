@@ -31,6 +31,9 @@ public class MainPageActivity extends Activity {
 				case 1:
 					intent = new Intent(MainPageActivity.this, CCTVMainPageActivity.class);
 					break;
+				case 2:
+					intent = new Intent(MainPageActivity.this, SettingActivity.class);
+					break;
 				}
 				startActivity(intent);
 			}

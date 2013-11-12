@@ -2,46 +2,44 @@ package com.pantum.train;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 
 import android.annotation.SuppressLint;
-import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pantum.R;
 import com.pantum.model.TrainModelData;
 import com.pantum.utility.ConstantVariable;
 import com.pantum.utility.PantumDatabase;
+import com.pantum.utility.StaticVariable;
 import com.pantum.utility.Utility;
 
 public class TrainPositionFragment extends Fragment {
 	private WebView wv;
 	private HashMap<String, String> map;
-	private TextView stationName;
 	private PantumDatabase pd;
 	private ListView scheduleList;
-	private ImageView favoriteButton;
 	private LinearLayout dataLayout;
 	private LinearLayout noDataLayout;
 	private String currentStationName = "";
@@ -51,7 +49,7 @@ public class TrainPositionFragment extends Fragment {
 	final Timer myTimer = new Timer();
 	private boolean isOnPause = false;
 	private ProgressBar progressBar;
-	private TrainSchedulesListAdapter adapter;
+	private TrainPositionListAdapter adapter;
 	private View rootView;
 	private CountDownTimer refreshTimer;
 	private boolean isEmpty = false;
@@ -61,6 +59,20 @@ public class TrainPositionFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Bundle argument = getArguments();
+		String lastStationName = StaticVariable.getLastStationName();
+		Log.i(this.toString(), ">>>>>>>>>>>>>>>>>>>>>>>>>.. "+lastStationName);
+		if(argument != null){
+			String currentStation = argument.getString(ConstantVariable.CURRENT_STATION_KEY);
+			currentStationName = currentStation;
+			StaticVariable.setLastStationName(currentStation);
+			isFavorited = Utility.loadBooleanPreferences(currentStationName, getActivity());
+		}else if(lastStationName != null && !lastStationName.equalsIgnoreCase("")){
+			currentStationName = lastStationName;
+			isFavorited = Utility.loadBooleanPreferences(currentStationName, getActivity());
+		}else{
+			isEmpty = true;
+		}
 		setHasOptionsMenu(true);
 	}
 
@@ -93,41 +105,17 @@ public class TrainPositionFragment extends Fragment {
 		};
 		pd = new PantumDatabase(this.getActivity().getApplicationContext());
 		map = pd.getStationsCodeMap();
-		Bundle argument = getArguments();
-		if(argument != null){
-			String currentStation = argument.getString(ConstantVariable.CURRENT_STATION_KEY);
-			onItemSelected(currentStation);
+		if(!isEmpty){
+			onItemSelected(currentStationName);
 			setDataVisibility(true);
-		}else{
-			isEmpty = true;
 		}
-		favoriteButton.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				if(isFavorited){
-					Drawable starImage = getResources().getDrawable(R.drawable.star_blank_50_50);
-					favoriteButton.setImageDrawable(starImage);
-					Utility.savePreference(currentStationName, false, TrainPositionFragment.this.getActivity());
-					isFavorited = Utility.loadBooleanPreferences(currentStationName, TrainPositionFragment.this.getActivity());
-				}else{
-					if(!currentStationName.equalsIgnoreCase(ConstantVariable.EMPTY_STRING)){
-						Drawable starImage = getResources().getDrawable(R.drawable.star_orange_50_50);
-						favoriteButton.setImageDrawable(starImage);
-						Utility.savePreference(currentStationName, true, TrainPositionFragment.this.getActivity());
-						isFavorited = Utility.loadBooleanPreferences(currentStationName, TrainPositionFragment.this.getActivity());
-					}
-				}
-			}
-		});
 	}
 
 
 	private void findLayout(){
-		stationName = (TextView)rootView.findViewById(R.id.text);
+		progressBar = (ProgressBar)rootView.findViewById(R.id.train_progress_bar);
+		progressBar.setIndeterminate(true);
 		scheduleList = (ListView)rootView.findViewById(R.id.schedule_list);
-		favoriteButton = (ImageView)rootView.findViewById(R.id.favourite_button);
-		progressBar = (ProgressBar)rootView.findViewById(R.id.progress_bar);
 		dataLayout = (LinearLayout)rootView.findViewById(R.id.data_layout);
 		noDataLayout = (LinearLayout)rootView.findViewById(R.id.no_data_layout);
 		setWebView();
@@ -136,8 +124,22 @@ public class TrainPositionFragment extends Fragment {
 	@SuppressLint({ "SetJavaScriptEnabled", "JavascriptInterface" })
 	private void setWebView(){
 		wv = new WebView(this.getActivity().getApplicationContext());
+		
+		WebSettings wvSetting = wv.getSettings();
+		wvSetting.setJavaScriptEnabled(true);
+		wvSetting.setAppCacheEnabled(false);
+		wvSetting.setCacheMode(WebSettings.LOAD_NO_CACHE);
+		wvSetting.setDatabaseEnabled(false);
+		wvSetting.setBlockNetworkImage(true);
+		
 		wv.addJavascriptInterface(new MyJavaScriptInterface(), "HTMLOUT");
 		wv.setWebViewClient(new WebViewClient(){
+			
+			@Override
+			public void onPageStarted(WebView view, String url, Bitmap favicon) {
+				showProgressBar(true);
+				super.onPageStarted(view, url, favicon);
+			}
 
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -155,22 +157,21 @@ public class TrainPositionFragment extends Fragment {
 			public void onPageFinished(WebView view, String url) {
 				if(!isStopped){
 					view.loadUrl("javascript:window.HTMLOUT.processHTML(document.getElementsByTagName('tbody')[0].innerHTML);");
-					showProgressBar(false);
 					boolean isAutoRefresh = Utility.loadBooleanPreferences(ConstantVariable.TRAIN_AUTO_REFRESH_KEY, getActivity());
 					if(isAutoRefresh){
 						refreshTimer.cancel();
 						refreshTimer.start();
 					}
-					super.onPageFinished(view, url);
 					if(isRefreshing){
 						Toast.makeText(getActivity(), getResources().getString(R.string.train_position_refresh_end), Toast.LENGTH_SHORT).show();
 						isRefreshing = false;
 					}
 				}
+				view.clearCache(true);
+				super.onPageFinished(view, url);
 			}
 		});
-		WebSettings wvSetting = wv.getSettings();
-		wvSetting.setJavaScriptEnabled(true);
+		
 	}
 
 	public class MyJavaScriptInterface
@@ -200,6 +201,7 @@ public class TrainPositionFragment extends Fragment {
 					coloumnArray.add(classTrain);
 				}
 				TrainModelData modelData = new TrainModelData();
+				modelData.setmContext(getActivity().getApplicationContext());
 				if(coloumnArray.size() > 1){
 					modelData.setTrainNumber(coloumnArray.get(0));
 					modelData.setDestination(coloumnArray.get(1));
@@ -230,8 +232,10 @@ public class TrainPositionFragment extends Fragment {
 		};
 
 		protected void startUpdateListView() {
+			clearWebViewCache();
+			showProgressBar(false);
 			if(adapter == null){
-				adapter = new TrainSchedulesListAdapter(TrainPositionFragment.this.getActivity().getApplicationContext(), rows, pd);
+				adapter = new TrainPositionListAdapter(TrainPositionFragment.this.getActivity().getApplicationContext(), rows, pd);
 				scheduleList.setAdapter(adapter);
 			}else{
 				adapter.refreshList(rows);
@@ -241,15 +245,6 @@ public class TrainPositionFragment extends Fragment {
 
 	public void onItemSelected(String currentStation){
 		if(Utility.isNetworkAvailable(TrainPositionFragment.this.getActivity())){
-			currentStationName = currentStation;
-			isFavorited = Utility.loadBooleanPreferences(currentStationName, this.getActivity());
-			if(isFavorited){
-				Drawable starImage = getResources().getDrawable(R.drawable.star_orange_50_50);
-				favoriteButton.setImageDrawable(starImage);
-			}else{
-				Drawable starImage = getResources().getDrawable(R.drawable.star_blank_50_50);
-				favoriteButton.setImageDrawable(starImage);
-			}
 			boolean isFound = false;
 			for (int i = 0; i < map.size() && !isFound; i++) {
 				currentKey = map.get(currentStation);
@@ -258,7 +253,7 @@ public class TrainPositionFragment extends Fragment {
 					startLoadUrl();
 					String stringFormat = getResources().getString(R.string.train_station_string_format);
 					String completeString = String.format(stringFormat, currentStation);
-					stationName.setText(completeString);
+					getActivity().setTitle(completeString);
 					isFound = true;
 				}
 			}
@@ -284,9 +279,11 @@ public class TrainPositionFragment extends Fragment {
 
 	private void startLoadUrl(){
 		if(Utility.isNetworkAvailable(getActivity())){
-			showProgressBar(true);
 			String url = String.format(ConstantVariable.TRAIN_URL_FORMAT, currentKey);
-			wv.loadUrl(url);
+			Map<String, String> noCacheHeaders = new HashMap<String, String>(2);
+		    noCacheHeaders.put("Pragma", "no-cache");
+		    noCacheHeaders.put("Cache-Control", "no-cache");
+			wv.loadUrl(url, noCacheHeaders);
 		}else{
 			Toast.makeText(TrainPositionFragment.this.getActivity(), getResources().getString(R.string.train_no_internet_connection), Toast.LENGTH_LONG).show();
 		}
@@ -312,7 +309,7 @@ public class TrainPositionFragment extends Fragment {
 		if(state){
 			progressBar.setVisibility(View.VISIBLE);
 		}else{
-			progressBar.setVisibility(View.INVISIBLE);
+			progressBar.setVisibility(View.GONE);
 		}
 	}
 
@@ -320,8 +317,15 @@ public class TrainPositionFragment extends Fragment {
 	public void onPrepareOptionsMenu(Menu menu) {
 		super.onPrepareOptionsMenu(menu);
 		TrainNavigationDrawer drawer = new TrainNavigationDrawer().getInstance();
+		
+		if(isFavorited){
+			menu.findItem(R.id.action_favorite).setIcon(R.drawable.ic_action_important);
+		}else{
+			menu.findItem(R.id.action_favorite).setIcon(R.drawable.ic_action_not_important);
+		}
 		menu.findItem(R.id.action_refresh).setVisible(!drawer.isDrawerOpen() && !isEmpty);
 		menu.findItem(R.id.action_map).setVisible(!drawer.isDrawerOpen() && !isEmpty);
+		menu.findItem(R.id.action_favorite).setVisible(!drawer.isDrawerOpen() && !isEmpty);
 	}
 
 	@Override
@@ -335,25 +339,49 @@ public class TrainPositionFragment extends Fragment {
 		switch (item.getItemId()) {
 		case R.id.action_refresh:
 			refreshTimer.cancel();
-			startLoadUrl();
+			wv.reload();
 			isRefreshing = true;
 			Toast.makeText(getActivity(), getResources().getString(R.string.train_position_refresh_start), Toast.LENGTH_SHORT).show();
 			return true;
 		case R.id.action_map:
-			Intent intent = new Intent(getActivity(), TrainMapViewFragment.class);
+			Intent intent = new Intent(getActivity(), TrainMapViewActivity.class);
 			String[] position = {pd.getLatitude(currentStationName),pd.getLongitude(currentStationName)};
 			intent.putExtra(ConstantVariable.TRAIN_INTENT_EXTRA_MAP, position);
 			intent.putExtra(ConstantVariable.TRAIN_INTENT_EXTRA_STATION_NAME, currentStationName);
 			startActivity(intent);
+		case R.id.action_favorite:
+			if(isFavorited){
+				Utility.savePreference(currentStationName, false, getActivity());
+				isFavorited = Utility.loadBooleanPreferences(currentStationName, getActivity());
+				item.setIcon(R.drawable.ic_action_not_important);
+			}else{
+				if(!currentStationName.equalsIgnoreCase(ConstantVariable.EMPTY_STRING)){
+					Utility.savePreference(currentStationName, true, getActivity());
+					isFavorited = Utility.loadBooleanPreferences(currentStationName, getActivity());
+					item.setIcon(R.drawable.ic_action_important);
+				}
+			}
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 
+	}
+	
+	private void clearWebViewCache(){
+		wv.clearCache(true);
+		wv.clearHistory();
+		wv.clearFormData();
 	}
 
 	@Override
 	public void onStop() {
 		super.onStop();
 		isStopped = true;
+	}
+	
+	@Override
+	public void onDestroy() {
+		clearWebViewCache();
+		super.onDestroy();
 	}
 }

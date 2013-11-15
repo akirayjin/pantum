@@ -13,7 +13,6 @@ import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -61,7 +60,6 @@ public class TrainPositionFragment extends Fragment {
 		super.onCreate(savedInstanceState);
 		Bundle argument = getArguments();
 		String lastStationName = StaticVariable.getLastStationName();
-		Log.i(this.toString(), ">>>>>>>>>>>>>>>>>>>>>>>>>.. "+lastStationName);
 		if(argument != null){
 			String currentStation = argument.getString(ConstantVariable.CURRENT_STATION_KEY);
 			currentStationName = currentStation;
@@ -349,6 +347,7 @@ public class TrainPositionFragment extends Fragment {
 			intent.putExtra(ConstantVariable.TRAIN_INTENT_EXTRA_MAP, position);
 			intent.putExtra(ConstantVariable.TRAIN_INTENT_EXTRA_STATION_NAME, currentStationName);
 			startActivity(intent);
+			return true;
 		case R.id.action_favorite:
 			if(isFavorited){
 				Utility.savePreference(currentStationName, false, getActivity());
@@ -361,6 +360,7 @@ public class TrainPositionFragment extends Fragment {
 					item.setIcon(R.drawable.ic_action_important);
 				}
 			}
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

@@ -2,7 +2,7 @@ pantum
 ======
 
 Pantauan Transportasi Umum
-Current Version 0.6.1
+Current Version 0.6.1.1
 
 Feature:
 - For now only Train position in realtime & CCTV
@@ -13,6 +13,9 @@ Feature:
 - Refresh anytime with refresh button
 
 changelog:
+version 0.6.1.1
+- Fix Map button in position turn into favorite icon in landscape mode
+
 version 0.6.1
 - change ui in train using tab
 - move setting to main menu

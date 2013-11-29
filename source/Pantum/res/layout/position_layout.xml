@@ -1,42 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <ProgressBar
-        android:id="@+id/train_progress_bar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="9dp"
-        android:indeterminateOnly="true"
-        android:visibility="gone"
-        android:layout_marginTop="-6dp" />
-
     <LinearLayout
-        android:id="@+id/data_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:visibility="gone" >
-
-        <ListView
-            android:id="@+id/schedule_list"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/no_data_layout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical" >
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/data_layout"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:gravity="center"
-            android:text="@string/no_data" />
-    </LinearLayout>
+            android:orientation="vertical"
+            android:visibility="gone" >
 
-</LinearLayout>
+            <ListView
+                android:id="@+id/schedule_list"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/no_data_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:text="@string/no_data" />
+        </LinearLayout>
+    </LinearLayout>
+    
+    <include layout="@layout/generic_progress_bar" />
+
+</FrameLayout>

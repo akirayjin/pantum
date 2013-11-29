@@ -122,6 +122,7 @@
     <string name="action_video">Show as Video</string>
     <string name="action_picture">Show as Picture</string>
     <string name="title_activity_setting">Settings</string>
-    <string name="dummy_section_text">Section %1d is just a dummy section.</string>
+    <string name="setting_train_group">Train Position Options</string>
+    <string name="setting_cctv_group">View CCTV Options</string>
 
 </resources>

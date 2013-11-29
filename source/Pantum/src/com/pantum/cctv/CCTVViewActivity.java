@@ -9,18 +9,22 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.VideoView;
 
 import com.pantum.R;
@@ -36,26 +40,62 @@ public class CCTVViewActivity extends Activity {
 	private String urlImage;
 	private String urlVideo;
 	private boolean isFinished = false;
+	private ProgressBar mProgressBar;
+	private ActionBar actionBar;
+	private boolean isAutoRefresh = false;
+	private CountDownTimer refreshTimer;
+	private boolean isOnPause = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_cctvview);
+		isAutoRefresh = Utility.loadBooleanPreferences(ConstantVariable.TRAIN_AUTO_REFRESH_KEY, this.getApplicationContext());
+		setRefreshTimer();
 		image = (ImageView)findViewById(R.id.cctv_image);
 		video = (VideoView)findViewById(R.id.cctv_video);
+		mProgressBar = (ProgressBar)findViewById(R.id.generic_progress_bar);
 		CCTVPlaceModelData place = Utility.getTempPlaceData();
+		setVideoPlayer();
 		if(place!=null){
 			urlImage = ConstantVariable.CCTV_IMAGE_URL_BASE+place.getCamId();
 			urlVideo = ConstantVariable.CCTV_VIDEO_URL_BASE+place.getCamId();
-			new DownloadImageTask().execute(urlImage);
+			startRequest(isVideo);
 		}
+		actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
 	}
 
-	private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+	private void setRefreshTimer(){
+		int savedRefreshTimeout = Utility.loadIntegerPreferences(ConstantVariable.CCTV_REFRESH_TIMEOUT_VALUE_KEY, this.getApplicationContext());
+		if (savedRefreshTimeout < 1){
+			savedRefreshTimeout = ConstantVariable.TEN_THOUSAND_MILLIS;
+		}
+		refreshTimer = new CountDownTimer(savedRefreshTimeout, ConstantVariable.INTERVAL_ONE_THOUSAND_MILLIS) {
+
+			@Override
+			public void onTick(long millisUntilFinished) {}
+
+			@Override
+			public void onFinish() {
+				startRequest(isVideo);
+			}
+		};
+	}
+
+	private class DownloadImageTask extends AsyncTask<String, Integer, Bitmap> {
+
+		@Override
+		protected void onPreExecute() {
+			showProgressBar(true);
+		}
+
 		protected void onPostExecute(Bitmap result) {
 			image.setImageBitmap(result);
 			image.setVisibility(View.VISIBLE);
 			isFinished = true;
+			showProgressBar(false);
+			startRefreshTimer();
 		}
 
 		@Override
@@ -68,7 +108,8 @@ public class CCTVViewActivity extends Activity {
 				HttpGet httpget = new HttpGet(urls[0]);
 				ResponseHandler<String> responseHandler = new BasicResponseHandler();
 				String responseString = Client.execute(httpget, responseHandler);
-				bitmap = BitmapFactory.decodeStream((InputStream)new URL(responseString).getContent());
+				InputStream in = (InputStream) new URL(responseString).getContent();
+				bitmap = BitmapFactory.decodeStream(in);
 			}
 			catch(Exception ex)
 			{
@@ -78,10 +119,18 @@ public class CCTVViewActivity extends Activity {
 		}
 	}
 
-	private class DownloadVideoTask extends AsyncTask<String, Void, String> {
+	private class DownloadVideoTask extends AsyncTask<String, Integer, String> {
+
+		@Override
+		protected void onPreExecute() {
+			showProgressBar(true);
+		}
+
 		protected void onPostExecute(String result) {
 			playVideo(result);
 			isFinished = true;
+			showProgressBar(false);
+			startRefreshTimer();
 		}
 
 		@Override
@@ -103,14 +152,25 @@ public class CCTVViewActivity extends Activity {
 		}
 	}
 
+	private void setVideoPlayer(){
+		video.setMediaController(null);
+		video.requestFocus();
+		video.setOnCompletionListener(new OnCompletionListener() {
+
+			@Override
+			public void onCompletion(MediaPlayer mp) {
+				if(!mp.isLooping()){
+					mp.setLooping(true);
+					video.start();
+				}
+			}
+		});
+	}
+
 	private void playVideo(String url){
 		video.setVisibility(View.VISIBLE);
-		MediaController mediaController = new MediaController(this);
-		mediaController.setAnchorView(video);
 		Uri videoLink = Uri.parse(url);
-		video.setMediaController(mediaController);
 		video.setVideoURI(videoLink);
-		video.requestFocus();
 		video.start();
 	}
 
@@ -139,10 +199,11 @@ public class CCTVViewActivity extends Activity {
 		case R.id.action_picture:
 			isVideo = false;
 			if(video.isShown()){
+				video.stopPlayback();
 				video.setVisibility(View.GONE);
 			}
 			if(isFinished){
-				new DownloadImageTask().execute(urlImage);
+				startRequest(isVideo);
 			}
 			invalidateOptionsMenu();
 			return true;
@@ -152,12 +213,59 @@ public class CCTVViewActivity extends Activity {
 				image.setVisibility(View.GONE);
 			}
 			if(isFinished){
-				new DownloadVideoTask().execute(urlVideo);
+				startRequest(isVideo);
 			}
 			invalidateOptionsMenu();
+			return true;
+		case android.R.id.home:
+			finish();
+			return true;
+		case R.id.action_refresh:
+			startRequest(isVideo);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+
+	private void startRequest(boolean isVideo){
+		if(isVideo){
+			new DownloadVideoTask().execute(urlVideo);
+		}else{
+			new DownloadImageTask().execute(urlImage);
+		}
+	}
+
+	private void showProgressBar(boolean state){
+		if(state && !mProgressBar.isShown()){
+			mProgressBar.setVisibility(View.VISIBLE);
+		}else if(mProgressBar.isShown()){
+			mProgressBar.setVisibility(View.GONE);
+		}
+	}
+	
+	public void stopRefreshTimer(){
+		refreshTimer.cancel();
+	}
+
+	public void startRefreshTimer(){
+		refreshTimer.cancel();
+		refreshTimer.start();
+	}
+	
+	@Override
+	public void onPause() {
+		isOnPause = true;
+		stopRefreshTimer();
+		super.onPause();
+	}
+
+	@Override
+	public void onResume() {
+		if(isOnPause && isAutoRefresh){
+			isOnPause = false;
+			startRequest(isVideo);
+		}
+		super.onResume();
 	}
 }

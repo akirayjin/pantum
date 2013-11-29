@@ -160,4 +160,13 @@ public class TrainNavigationDrawer extends FragmentActivity {
 	public boolean isDrawerOpen(){
 		return mDrawerLayout.isDrawerOpen(mDrawerList);
 	}
+
+	@Override
+	public void onBackPressed() {
+		if(currentFragment == ConstantVariable.POSITION_FRAGMENT){
+			selectItem(ConstantVariable.STATION_LIST_FRAGMENT, null);
+		}else{
+			super.onBackPressed();
+		}	
+	}
 }

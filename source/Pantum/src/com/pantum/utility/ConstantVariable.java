@@ -21,6 +21,9 @@ public class ConstantVariable {
 	public static final String TRAIN_REFRESH_TIMEOUT_KEY= "trainRefreshTimeoutKey";
 	public static final String TRAIN_AUTO_REFRESH_KEY = "trainAutoRefreshKey";
 	public static final String TRAIN_REFRESH_TIMEOUT_VALUE_KEY = "trainRefreshTimeoutValueKey";
+	public static final String CCTV_REFRESH_TIMEOUT_KEY= "cctvRefreshTimeoutKey";
+	public static final String CCTV_AUTO_REFRESH_KEY = "cctvAutoRefreshKey";
+	public static final String CCTV_REFRESH_TIMEOUT_VALUE_KEY = "cctvRefreshTimeoutValueKey";
 	public static final String TRAIN_INTENT_EXTRA_MAP = "trainIntentExtraMap";
 	public static final String TRAIN_INTENT_EXTRA_STATION_NAME = "trainIntentExtraStationName";
 	public static final int TRAIN_INDEX_LATITUDE = 0;

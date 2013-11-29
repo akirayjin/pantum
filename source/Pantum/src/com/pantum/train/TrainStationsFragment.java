@@ -1,5 +1,7 @@
 package com.pantum.train;
 
+import java.util.ArrayList;
+
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -16,6 +18,7 @@ import android.view.ViewGroup;
 
 import com.astuetz.viewpager.extensions.PagerSlidingTabStrip;
 import com.pantum.R;
+import com.pantum.utility.Utility;
 
 public class TrainStationsFragment extends Fragment{
 	private final Handler handler = new Handler();
@@ -44,6 +47,10 @@ public class TrainStationsFragment extends Fragment{
 		mViewPager = (ViewPager) rootView.findViewById(R.id.pager);
 		tabs = (PagerSlidingTabStrip) rootView.findViewById(R.id.tabs);
 		mViewPager.setAdapter(mAppSectionsPagerAdapter);
+		ArrayList<String> favoriteArray = Utility.getFavoriteArray(getActivity());
+		if(favoriteArray.isEmpty()){
+			mViewPager.setCurrentItem(1);
+		}
 		tabs.setViewPager(mViewPager);
 		changeColor(currentColor);
 	}
@@ -52,7 +59,7 @@ public class TrainStationsFragment extends Fragment{
 
 		tabs.setIndicatorColor(newColor);
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+/*		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 
 			Drawable colorDrawable = new ColorDrawable(newColor);
 			Drawable bottomDrawable = getResources().getDrawable(R.drawable.actionbar_bottom);
@@ -68,7 +75,7 @@ public class TrainStationsFragment extends Fragment{
 			getActivity().getActionBar().setDisplayShowTitleEnabled(false);
 			getActivity().getActionBar().setDisplayShowTitleEnabled(true);
 
-		}
+		}*/
 
 		currentColor = newColor;
 

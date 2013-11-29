@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- TRAIN POSITION OPTION -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin" >
+
+        <TextView
+            style="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="bottom"
+            android:text="@string/setting_train_group"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="3dp"
+        android:background="@android:color/darker_gray" />
+
+    <LinearLayout
+        android:id="@+id/train_setting_auto_refresh_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin" >
+
+        <TextView
+            android:id="@+id/train_setting_auto_refresh_text"
+            style="@android:style/TextAppearance.DeviceDefault.Small"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.9"
+            android:gravity="center_vertical"
+            android:text="@string/train_setting_auto_refresh" />
+
+        <CheckBox
+            android:id="@+id/train_setting_auto_refresh_check"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray" />
+
+    <LinearLayout
+        android:id="@+id/train_setting_refresh_timeout_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin" >
+
+        <TextView
+            android:id="@+id/train_setting_refresh_timeout_text"
+            style="@android:style/TextAppearance.DeviceDefault.Small"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.9"
+            android:gravity="center_vertical"
+            android:text="@string/train_setting_refresh_interval" />
+
+        <Spinner
+            android:id="@+id/train_setting_refresh_timeout_spinner"
+            android:layout_width="120dip"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <!-- CCTV OPTIONS -->
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin" >
+
+        <TextView
+            style="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:gravity="bottom"
+            android:text="@string/setting_cctv_group"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="3dp"
+        android:background="@android:color/darker_gray" />
+
+    <LinearLayout
+        android:id="@+id/cctv_setting_auto_refresh_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin" >
+
+        <TextView
+            android:id="@+id/cctv_setting_auto_refresh_text"
+            style="@android:style/TextAppearance.DeviceDefault.Small"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.9"
+            android:gravity="center_vertical"
+            android:text="@string/train_setting_auto_refresh" />
+
+        <CheckBox
+            android:id="@+id/cctv_setting_auto_refresh_check"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray" />
+
+    <LinearLayout
+        android:id="@+id/cctv_setting_refresh_timeout_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dip"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin" >
+
+        <TextView
+            android:id="@+id/cctv_setting_refresh_timeout_text"
+            style="@android:style/TextAppearance.DeviceDefault.Small"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="0.9"
+            android:gravity="center_vertical"
+            android:text="@string/train_setting_refresh_interval" />
+
+        <Spinner
+            android:id="@+id/cctv_setting_refresh_timeout_spinner"
+            android:layout_width="120dip"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>
